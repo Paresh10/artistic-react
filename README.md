@@ -1,68 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Capstone – Artistic-MERN
 
-## Available Scripts
+About:
 
-In the project directory, you can run:
+Artistic is the professional platform for the artists to be connected and find their artistic selves. First ever social site for the Artistic community. It is Fully functional CRUD MERN (MongoDB, Express, React, Node) stack app. This app uses the API which is coming from this beck-end Express and Node app.
 
-### `npm start`
+#### User Story:
+1. User can can sign up and login.
+2. User can create profile at the sign up page and update the full profile once logged in by clicking on my profile tab.
+4. User can add post, upload images comment on & see other users's post and like other user's post. User can edit/update or delete any property that belong to the user.
+5. User can send connection request. User also have the ability to accept or decline connection request.
+6. User can click on particular post and the modal box will open which contains all the information about the post such as details and comments.
+7. User can see all the post by other users by clicking home tab.
+8. User can message other user by clicking on messaging tab or on the connections tab.
+9. User can delete their account which will delete all the information about them including all the postings, comments and pictures.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Wireframes:
+![alt text](https://i.imgur.com/RZgoZEa.png)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### Technologies used:
+**React** – Amazing JavaScript library that provides developers super powers of building complex websites easily! Front-end has been developed using REACT and designed with semantic-ui-react
 
-### `npm test`
+**Express - Node** – Very powerful express.js and Node.js are the back bone of this website. Back-end is built by using express, node and packages. Which could be installed by npm.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+__MongoDB__ – The amazing MongoDB is Non structured query language database. All the data has been saved and accessible using MongoDB and Mongoose
 
-### `npm run build`
+__CORS__ – Which stands for cross origin resource sharing, provides the ability to share data and routes from origins. Origin can be host, server and/or browser. CORS makes it possible to cross function the resources.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Forthcoming features:
+1. Give users ability to see  you may know ```User``` by matching algorithms.
+2. Create a job board which let's user post and see the available jobs.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Instruction on how to run the app:
+This app is running with two different repositories. For the front-end is React and for the back-end is Express and Node see instruction here to run the express api.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+For React clone this repo and run npm install in the terminal inside the cloned repo. This will install all the dependencies and violla.
