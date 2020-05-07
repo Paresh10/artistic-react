@@ -16,7 +16,7 @@ Artistic is the professional platform for the artists to be connected and find t
 
 #### Wireframes:
 ![alt text](https://i.imgur.com/RZgoZEa.png)
-![alt text](https://i.imgur.com/3Ub9QWh.png)
+![alt text](https://i.imgur.com/dZfSkBs.png)
 
 #### Technologies used:
 **React** – Amazing JavaScript library that provides developers super powers of building complex websites easily! Front-end has been developed using REACT and designed with semantic-ui-react.
