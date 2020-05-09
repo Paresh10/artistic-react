@@ -1,30 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LoginSignUpForm from './LoginSignUpForm'
 
-function App() {
+
+export default function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
+
+  const signup = async (signupInfo) => {
+    const url = process.env.REACT_APP_API_URL + "/users"
+
+    try {
+      const signupResponse = await fetch(url, {
+        credentials: 'include',
+        metthod: 'POST',
+        body: JSON.stringify(signupInfo),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const signupJson = await signupResponse.json()
+
+      if (signupResponse.status === 201) {
+        setLoggedIn(true)
+        setLoggedInUserEmail(signupJson.email)
+      }
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <LoginSignUpForm />
     </div>
   );
 }
 
-export default App;
 
-// About:
-//
-// This API is created using Express, Node and MongoDB for the Database. This API can be use in creating any social site. It provide full-crud and friendship model. Currently it is in use for this React project here. To get the api and run it for your project see the Instruction below on how to run.
