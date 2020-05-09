@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import LoginSignUpForm from './LoginSignUpForm'
+import MainContainer from './MainContainer'
 
 
 export default function App() {
@@ -98,7 +99,7 @@ const logout = async () => {
     {
       loggedIn === true
       ?
-      <p> Welcome </p>
+      <MainContainer />
       :
     <LoginSignUpForm 
     login={login}

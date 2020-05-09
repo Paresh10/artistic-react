@@ -74,7 +74,7 @@ export default function LoginSignForm({login, signup}) {
 						placeholder='type your name here'
 						value={userInfo.name}
 						onChange={handleChange}
-						/>
+						/>																	
 					}					
 						<Form.Input
 						icon='user'
