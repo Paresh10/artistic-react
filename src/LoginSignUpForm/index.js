@@ -41,9 +41,20 @@ export default function LoginSignForm({login, signup}) {
 
 	return(
 		<Segment placeholder>
-			<Header as='h1' style={{color: '#8A2BE2', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px'}} textAlign='center'>
+			<Header as='h1' style={{color: '#8A2BE2', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px', textAlign:'center'}}>
 				 Artistic 
 			</Header>
+			{
+				action === 'Login'
+				?
+			<h2 style={{ textAlign: 'center', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
+			Welcome back! Let's create something together! </h2>
+			:
+			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
+			Hey! Let's get you connected with the artistic world! </h2>	
+			}
+			
+
 			<Grid columns={2} relaxed='very' stackable inverted textAlign='center' style={{ height: '100vh', marginTop: '0px' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450}}>
 
@@ -92,18 +103,18 @@ export default function LoginSignForm({login, signup}) {
 				{
 					action === 'Login'
 					?
-					<h5>
+					<h4>
 
 						New to Artistic?
 						<span className="link" onClick={switchForm}>
 							<Button style={{backgroundColor: '#8A2BE2', color: 'white'}} content='Signup' icon='signup' size='big'></Button>
 						</span>
 
-					</h5>
+					</h4>
 					:
-					<h5>
+					<h4>
                			Already on Artistic? <span className="link" onClick={switchForm}> Log in</span>
-               		</h5>
+               		</h4>
 				}
 				</Grid.Column>
 			</Grid>
