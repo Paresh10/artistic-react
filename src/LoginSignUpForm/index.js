@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Divider, Form, Grid, Segment, Header, Image, Message } from 'semantic-ui-react'
+import { Button, Divider, Form, Grid, Segment, Header, Image } from 'semantic-ui-react'
 import '../index.css'
 
 export default function LoginSignForm({login, signup}) {
@@ -13,7 +13,7 @@ export default function LoginSignForm({login, signup}) {
 
 	const switchForm = () => {
 		if (action === 'Login') {
-			setAction('Join Now')
+			setAction('Signup')
 		}
 		else {
 			setAction('Login')
@@ -41,14 +41,14 @@ export default function LoginSignForm({login, signup}) {
 
 	return(
 		<Segment placeholder>
-			<Header as='h1' style={{color: '#8A2BE2', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px', textAlign:'center'}}>
+			<Header as='h1' style={{color: '#816687', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px', textAlign:'center'}}>
 				 Artistic 
 			</Header>
 			{
 				action === 'Login'
 				?
-			<h2 style={{ textAlign: 'center', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
-			Welcome back! Let's create something together! </h2>
+			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
+			Welcome back to the Artistic world! </h2>
 			:
 			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
 			Hey! Let's get you connected with the artistic world! </h2>	
@@ -58,14 +58,14 @@ export default function LoginSignForm({login, signup}) {
 			<Grid columns={2} relaxed='very' stackable inverted textAlign='center' style={{ height: '100vh', marginTop: '0px' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450}}>
 
-				    <Header as='h2' style={{ color: '#8A2BE2', marginLeft: '15px'}} textAlign='left'>
+				    <Header as='h2' style={{ color: '#816687', marginLeft: '15px'}} textAlign='left'>
               			<Image src="" />
               			 {action}!
            			</Header>
 
 					<Form onSubmit={handleSubmit}>
 					{
-						action === 'Join Now'
+						action === 'Signup'
 						&&
 					
 						<Form.Input
@@ -95,7 +95,7 @@ export default function LoginSignForm({login, signup}) {
 						onChange={handleChange}
 						/>
 
-						<Button fluid size='large' content={action}  style={{ backgroundColor: '#8A2BE2', color: 'white' }} /> 
+						<Button fluid size='large' content={action}  style={{ backgroundColor: '#816687', color: 'white' }} /> 
 					</Form>
 				</Grid.Column>
 
@@ -107,7 +107,7 @@ export default function LoginSignForm({login, signup}) {
 
 						New to Artistic?
 						<span className="link" onClick={switchForm}>
-							<Button style={{backgroundColor: '#8A2BE2', color: 'white'}} content='Signup' icon='signup' size='big'></Button>
+							<Button style={{backgroundColor: '#816687', color: 'white'}} content='Signup' icon='signup' size='big'></Button>
 						</span>
 
 					</h4>
