@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PostsList from '../PostsList'
+import PostNewForm from '../PostNewForm'
 
 
 export default function MainContainer() {
@@ -32,8 +33,37 @@ const getPosts = async () => {
 	}
 }
 
+
+// Add New Post
+const addNewPost = async (addPost) => {
+	try {
+		const url = process.env.REACT_APP_API_URL + "/posts"
+
+		const newPostResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(addPost)
+		})
+
+		const newPostJson = await newPostResponse.json()
+
+		if (newPostResponse.status === 201) {
+
+			setPosts([...posts, newPostJson.data])
+		}
+	}
+
+	catch (err) {
+		console.error(err)
+	}
+}
+
 return(
 		<React.Fragment>
+		<PostNewForm addNewPost={addNewPost}/>
 		{
 			posts.length > 0
 			&&
@@ -41,7 +71,6 @@ return(
 		}
 		</React.Fragment>
 	)
-
 
 } // Main function
 

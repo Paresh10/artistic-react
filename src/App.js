@@ -63,8 +63,7 @@ const login = async (loginInfo) => {
       setLoggedIn(true)
       setLoggedInUserEmail(loginJson.data.email)
     }
-    console.log("loginJson.data.email")
-    console.log(loginJson.data.email)
+
   }
   catch(err) {
     console.error(err)
