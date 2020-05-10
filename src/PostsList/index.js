@@ -31,14 +31,20 @@ export default function PostsList(props) {
 
 
 					<Card.Content extra>
-					<div className="ui two buttons">
+					<div className="ui three buttons">
 						<Button basic color='grey'>
-						<Icon name='thumbs up outline'/>
+						<Icon name='thumbs up outline'/>Like
 						</Button>
 
 						<Button>
-						<Icon name='comment' />
+						<Icon name='comment' />Comment
 						</Button>
+
+						<Button>
+						<a onClick={() => props.postToView(post._id)}>
+						<Icon name="envelope open outline" />
+						 Post</a>
+						</Button>						
 					</div>	
 					</Card.Content>
 

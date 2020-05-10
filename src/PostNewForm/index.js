@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Button, Label, Modal, Header, Icon } from 'semantic-ui-react'
+import { Form, Button, Modal, Header, Icon } from 'semantic-ui-react'
 
 export default function PostNewForm({addNewPost}) {
 
@@ -27,7 +27,7 @@ const handleSubmit = (event) => {
 
 return(
 	<Modal trigger={<Button 
-		style={{ backgroundColor: '#816687', color: 'white', marginTop: '100px'}}> 
+		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
 		<Icon name='write square'/> What's on your mind?
 		</Button>}
 		closeIcon={true}

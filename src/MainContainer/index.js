@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import PostsList from '../PostsList'
 import PostNewForm from '../PostNewForm'
-
+import ShowPost from '../ShowPost'
 
 export default function MainContainer() {
 	const [posts, setPosts] = useState([])
+	const [showPostById, setShowPostById] = useState('')
 
 
 useEffect(() => {
@@ -61,13 +62,57 @@ const addNewPost = async (addPost) => {
 	}
 }
 
+
+// Show route for post
+const postToView = async (postId) => {
+	try {
+		const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+
+		const showPostResponse = await fetch(url, {
+			credentials: 'include'
+		})
+
+		const showPostJson = await showPostResponse.json()
+
+		console.log("showPostJson")
+		console.log(showPostJson)
+
+		setShowPostById(showPostJson.data)
+
+		console.log("showPostById")
+		console.log(showPostById)
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 return(
 		<React.Fragment>
+		<ShowPost showPostById={showPostById}/>
 		<PostNewForm addNewPost={addNewPost}/>
 		{
 			posts.length > 0
 			&&
-			<PostsList posts={posts}/>
+			<PostsList 
+			posts={posts}
+			postToView={postToView}
+			/>
 		}
 		</React.Fragment>
 	)
