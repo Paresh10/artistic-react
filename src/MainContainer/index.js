@@ -6,11 +6,13 @@ import ShowPost from '../ShowPost'
 export default function MainContainer() {
 	const [posts, setPosts] = useState([])
 	const [showPostById, setShowPostById] = useState('')
+	const [action, setAction] = useState('')
 
 
 useEffect(() => {
 	getPosts()
-}, [])
+	postToView()
+}, [], '')
 
 // Get all the posts
 const getPosts = async () => {
@@ -78,6 +80,7 @@ const postToView = async (postId) => {
 		console.log(showPostJson)
 
 		setShowPostById(showPostJson.data)
+		setAction('showPost')
 
 		console.log("showPostById")
 		console.log(showPostById)
@@ -104,7 +107,12 @@ const postToView = async (postId) => {
 
 return(
 		<React.Fragment>
-		<ShowPost showPostById={showPostById}/>
+		{
+			action === "showPost"
+			&&
+		<ShowPost 
+		showPostById={showPostById}/>
+		}
 		<PostNewForm addNewPost={addNewPost}/>
 		{
 			posts.length > 0
