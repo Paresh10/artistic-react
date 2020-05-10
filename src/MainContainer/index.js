@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react'
 import PostsList from '../PostsList'
 import PostNewForm from '../PostNewForm'
 import ShowPost from '../ShowPost'
+import EditPost from '../EditPost'
 
-export default function MainContainer() {
+export default function MainContainer({loggedInUserId}) {
 	const [posts, setPosts] = useState([])
 	const [showPostById, setShowPostById] = useState('')
 	const [action, setAction] = useState('')
+	const [idOfPostToEdit, setIdOfPostToEdit] = useState(-1)
+
 
 
 useEffect(() => {
 	getPosts()
-	postToView()
-}, [], '')
+}, [])
 
 // Get all the posts
 const getPosts = async () => {
@@ -49,18 +51,20 @@ const addNewPost = async (addPost) => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(addPost)
-		})
+		})	
 
 		const newPostJson = await newPostResponse.json()
-
-		if (newPostResponse.status === 201) {
+		
+		console.log(newPostJson.status)
+		
+		if (newPostJson.status === 201) {
 
 			setPosts([...posts, newPostJson.data])
 		}
 	}
 
 	catch (err) {
-		console.error(err)
+		console.error(err)	
 	}
 }
 
@@ -92,6 +96,69 @@ const postToView = async (postId) => {
 
 
 
+// Delete route for Post
+const deletePost = async (postId) => {
+	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+	
+
+	try {
+		const deletePostResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'DELETE'
+		})
+
+		if (deletePostResponse.status === 200) {
+			setPosts(posts.filter(post => post._id !== postId))
+		}
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
+
+
+// Edit Post route
+const editPost = (idOfPostToEdit) => setIdOfPostToEdit(idOfPostToEdit)
+
+// Update Post 
+const updatePost = async (updatePost) => {
+	const url = process.env.REACT_APP_API_URL + `/posts/` + idOfPostToEdit
+
+	try {
+		const updatePostResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify(updatePost),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const updatePostJson = await updatePostResponse.json()
+
+		if (updatePostResponse.status === 200) {
+			const idOfPostToBeUpdated = posts.findIndex(post => post._id === idOfPostToEdit)
+			posts[idOfPostToBeUpdated] = updatePostJson.data
+
+			setPosts(posts)
+			setIdOfPostToEdit(-1)
+
+			console.log("post in update")
+			console.log(posts)
+		}
+
+
+	}
+	catch (err) {
+		console.error(err)
+	}
+
+
+}
+
+// Close Modal
+const closeModal = () => setIdOfPostToEdit(-1)
+
 
 
 
@@ -110,10 +177,35 @@ return(
 		{
 			action === "showPost"
 			&&
-		<ShowPost 
-		showPostById={showPostById}/>
+			<ShowPost
+			loggedInUserId={loggedInUserId}
+			showPostById={showPostById}		
+			editPost={editPost}
+			deletePost={deletePost}		
+			/>
+
 		}
-		<PostNewForm addNewPost={addNewPost}/>
+
+
+
+	
+		{
+			idOfPostToEdit !== -1
+			&&
+		<div>
+			<EditPost 
+			closeModal={closeModal}
+			updatePost={updatePost}
+			postToEdit = 
+			{posts.find((post) => post._id === idOfPostToEdit)}
+			/>
+		</div>
+		}
+	
+
+			<PostNewForm 
+			addNewPost={addNewPost}/>
+
 		{
 			posts.length > 0
 			&&

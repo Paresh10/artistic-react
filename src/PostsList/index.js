@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Feed, Icon, Image, Button} from 'semantic-ui-react'
+import { Card, Icon, Image, Button} from 'semantic-ui-react'
 
 export default function PostsList(props) {
 
@@ -40,10 +40,10 @@ export default function PostsList(props) {
 						<Icon name='comment' />Comment
 						</Button>
 
-						<Button>
-						<a onClick={() => props.postToView(post._id)}>
+						<Button
+						onClick={() => props.postToView(post._id)}>	
 						<Icon name="envelope open outline" />
-						 Post</a>
+						 Post
 						</Button>						
 					</div>	
 					</Card.Content>

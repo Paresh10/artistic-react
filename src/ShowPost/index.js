@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
 import {  Modal, Header, Button, Image, Icon } from 'semantic-ui-react'
 
-export default function ShowPost({showPostById}){
+export default function ShowPost({editPost, showPostById, deletePost, loggedInUserId}){
 
 
+console.log("loggedInUserId")
+console.log(loggedInUserId)
 
+console.log("showPostById.user._id")
 
 	return(
 		<Modal trigger={<Button 
 		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
-		<Icon name='write square'/> See full Post
+		See full Post
 		</Button>}
 		closeIcon={true}
 		>
 
 		<Modal.Header style={{ color: '#816687' }}>
-			Posted by: –
+			Posted by: – {showPostById.user.name}
 		</Modal.Header>
 
 		<Modal.Content image>
@@ -30,14 +33,25 @@ export default function ShowPost({showPostById}){
 		  	</p>
 		  </Modal.Description>
 		</Modal.Content>
+	{
+			loggedInUserId === showPostById.user._id
+			&&
+		
 		<Modal.Actions>
-			<Button style={{backgroundColor: '#816687', color: 'white'}} type="Submit"> 
+			<Button
+			onClick={() => {editPost(showPostById._id)}} 
+			style={{backgroundColor: '#816687', color: 'white'}} 
+			type="Submit"> 
 				Edit 
 			</Button>
-			<Button style={{backgroundColor: '#816687', color: 'white'}} type="Submit"> 
+			<Button
+			onClick={() => {deletePost(showPostById._id)}} 
+			style={{backgroundColor: '#816687', color: 'white'}} 
+			type="Submit"> 
 				Delete 
 			</Button>						
 		</Modal.Actions>
+	}
 		</Modal>
 	)
 }

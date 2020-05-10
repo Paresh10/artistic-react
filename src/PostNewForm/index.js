@@ -1,20 +1,15 @@
 import React, { useState } from 'react'
 import { Form, Button, Modal, Header, Icon } from 'semantic-ui-react'
 
-export default function PostNewForm({addNewPost}) {
+export default function PostNewForm({addNewPost }) {
 
 	const [post, setPost] = useState({
 		body: ''
 	})
+	const [status, setStatus] = useState(-1)
 
 
-const handleChange = (event) => {
-	setPost = ({
-		...post,
-		[event.target.name]: event.target.value
-	})
-}
-
+  const handleChange = event => setPost({ ...post, [event.target.name]: event.target.value })
 
 
 const handleSubmit = (event) => {
@@ -22,7 +17,7 @@ const handleSubmit = (event) => {
 	addNewPost(post)
 }
 
-
+const closeModal = () => setStatus(-1)
 
 
 return(
@@ -31,6 +26,7 @@ return(
 		<Icon name='write square'/> What's on your mind?
 		</Button>}
 		closeIcon={true}
+		onClose={closeModal}
 		>
 		
 		<Header as='h4' style={{ color: '#816687' }}>
@@ -48,7 +44,9 @@ return(
 				/>
 
 				<Modal.Actions>
-					<Button style={{backgroundColor: '#816687', color: 'white'}} type="Submit"> 
+					<Button 
+					style={{backgroundColor: '#816687', color: 'white'}} 
+					type="Submit"> 
 						Post 
 					</Button>
 				</Modal.Actions>

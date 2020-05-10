@@ -8,6 +8,7 @@ export default function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
+  const [loggedInUserId, setLoggedInUserId] = useState(null)
 
 
 // Sign up route
@@ -62,6 +63,7 @@ const login = async (loginInfo) => {
     if (loginResponse.status === 200) {
       setLoggedIn(true)
       setLoggedInUserEmail(loginJson.data.email)
+      setLoggedInUserId(loginJson.data._id)
     }
 
   }
@@ -98,7 +100,9 @@ const logout = async () => {
     {
       loggedIn === true
       ?
-      <MainContainer />
+      <MainContainer 
+      loggedInUserId={loggedInUserId}
+      />
       :
     <LoginSignUpForm 
     login={login}
