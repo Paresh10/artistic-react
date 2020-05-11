@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Button, Divider, Form, Grid, Segment, Header, Image } from 'semantic-ui-react'
 import '../index.css'
 
-export default function LoginSignForm({login, signup}) {
+import { Message } from 'semantic-ui-react'
+
+export default function LoginSignForm({login, signup, message}) {
 	const [userInfo, setUserInfo] = useState({
 		email: '',
 		password: '',
@@ -41,6 +43,7 @@ export default function LoginSignForm({login, signup}) {
 
 	return(
 		<Segment placeholder>
+
 			<Header as='h1' style={{color: '#816687', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px', textAlign:'center'}}>
 				 Artistic 
 			</Header>
@@ -58,8 +61,11 @@ export default function LoginSignForm({login, signup}) {
 			<Grid columns={2} relaxed='very' stackable inverted textAlign='center' style={{ height: '100vh', marginTop: '0px' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450}}>
 
+					<h5 style={{ color: 'red' }}> {message} </h5>
+
 				    <Header as='h2' style={{ color: '#816687', marginLeft: '15px'}} textAlign='left'>
               			<Image src="" />
+
               			 {action}!
            			</Header>
 

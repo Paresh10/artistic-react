@@ -40,6 +40,10 @@ export default function App() {
         setLoggedInUserEmail(signupJson.data.email)
         setMessage(signupJson.data.name)
       }
+    else {
+      setLoggedIn(false)
+      setMessage(`Email already taken`)
+    }      
 
      
     }
@@ -109,6 +113,7 @@ const logout = async () => {
     if (logoutResponse.status === 200) {
       setLoggedIn(false)
       setLoggedInUserEmail('')
+      setMessage('')
     }
   }
   catch (err) {
@@ -133,6 +138,7 @@ const deleteUser = async () => {
     if (deleteUserResponse.status === 200) {
       setUsers(users.filter(user => user._id !== loggedInUserId))
       setLoggedIn(false)
+      setMessage('')
     }
   }
 
@@ -165,7 +171,6 @@ const setStatus = () => setButtonClick('New Action')
       loggedIn === true
       ?
       <MainContainer
-      setUserProfile={setUserProfile}
       userProfile={userProfile}
       buttonClick={buttonClick}
       loggedIn={loggedIn}
@@ -174,7 +179,8 @@ const setStatus = () => setButtonClick('New Action')
       deleteUser={deleteUser}
       />
       :
-      <LoginSignUpForm 
+      <LoginSignUpForm
+      message={message} 
       login={login}
       signup={signup}
       />

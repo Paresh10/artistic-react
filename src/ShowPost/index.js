@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {  Modal, Header, Button, Image } from 'semantic-ui-react'
 
-export default function ShowPost({editPost, showPostById, deletePost, loggedInUserId}){
+export default function ShowPost({ userProfile, editPost, showPostById, deletePost }){
 
 
 
@@ -30,7 +30,7 @@ export default function ShowPost({editPost, showPostById, deletePost, loggedInUs
 		  </Modal.Description>
 		</Modal.Content>
 	{
-			loggedInUserId === showPostById.user._id
+			userProfile._id === showPostById.user._id
 			&&
 		
 		<Modal.Actions>

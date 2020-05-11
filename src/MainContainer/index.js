@@ -247,7 +247,7 @@ return(
 			action === "showPost"
 			&&
 			<ShowPost
-			loggedInUserId={loggedInUserId}
+			userProfile={userProfile}
 			showPostById={showPostById}		
 			editPost={editPost}
 			deletePost={deletePost}		
