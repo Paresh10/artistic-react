@@ -13,6 +13,7 @@ export default function App() {
   const [message, setMessage] = useState('')
   const [buttonClick, setButtonClick] = useState('')
   const [userProfile, setUserProfile] = useState({})
+  const [users, setUsers] = useState([])
 
 
 // Sign up route
@@ -69,12 +70,16 @@ const login = async (loginInfo) => {
 
 
     if (loginResponse.status === 200) {
+
+
+      setUsers([...users, loginJson.data])
       setLoggedIn(true)
       setLoggedInUserEmail(loginJson.data.email)
       setLoggedInUserId(loginJson.data._id)
       setMessage(loginJson.data.name)
 
       setUserProfile(loginJson.data)
+
 
     }
 
@@ -111,8 +116,35 @@ const logout = async () => {
   }
 }
 
+
+const deleteUser = async () => {
+
+  try {
+    const url = process.env.REACT_APP_API_URL + '/users/' + loggedInUserId
+  
+    console.log("url")
+    console.log(url)
+    
+    const deleteUserResponse = await fetch(url, {
+      credentials: 'include',
+      method: 'DELETE'
+    })
+
+    if (deleteUserResponse.status === 200) {
+      setUsers(users.filter(user => user._id !== loggedInUserId))
+      setLoggedIn(false)
+    }
+  }
+
+
+  catch (err) {
+    console.error(err)
+  }
+}
+
 // SetAction here
 const setStatus = () => setButtonClick('New Action')
+
 
 
     /* <Button
@@ -122,23 +154,30 @@ const setStatus = () => setButtonClick('New Action')
 
   return (
     <React.Fragment>
-    <div>
+    <button
+    onClick={logout}
+    >
+      Logout
+    </button>
 
-    </div>
+
     {
-      loggedIn
+      loggedIn === true
       ?
       <MainContainer
+      setUserProfile={setUserProfile}
       userProfile={userProfile}
       buttonClick={buttonClick}
+      loggedIn={loggedIn}
       message={message} 
       loggedInUserId={loggedInUserId}
+      deleteUser={deleteUser}
       />
       :
-    <LoginSignUpForm 
-    login={login}
-    signup={signup}
-    />
+      <LoginSignUpForm 
+      login={login}
+      signup={signup}
+      />
   }
     </React.Fragment>
   );

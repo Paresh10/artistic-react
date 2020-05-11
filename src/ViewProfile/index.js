@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Button, Image, Header } from 'semantic-ui-react'
 
 
-export default function ViewProfile({userProfile, editUserProfile }) {
+export default function ViewProfile({deleteUser, userProfile, updateUser, editUserProfile }) {
+
 
 
 return(
@@ -42,8 +43,10 @@ return(
 			type="Submit"> 
 				Edit 
 			</Button>
-			<Button
 
+
+			<Button
+			onClick={() => {deleteUser(userProfile._id)}}
 			style={{backgroundColor: '#816687', color: 'white'}} 
 			type="Submit"> 
 				Delete 

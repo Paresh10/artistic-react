@@ -6,7 +6,7 @@ import EditPost from '../EditPost'
 import ViewProfile from '../ViewProfile'
 import EditUser from '../EditUser'
 
-export default function MainContainer({userProfile, loggedInUserId, message, buttonClick}) {
+export default function MainContainer({ userProfile, setUserProfile, loggededIn, loggedInUserId, message, deleteUser, buttonClick}) {
 	const [posts, setPosts] = useState([])
 	const [showPostById, setShowPostById] = useState('')
 	const [action, setAction] = useState('')
@@ -14,12 +14,14 @@ export default function MainContainer({userProfile, loggedInUserId, message, but
 
 	// Users
 	const [idOfUserToEdit, setIdOfUserToEdit] = useState(-1)
-	const [updateUserProfile, setUpdateUserProfile] = useState(userProfile)
+	const [users, setUsers] = useState([])
+	const [loggedIn, setLoggedIn] = useState(false)
 
 
 
 useEffect(() => {
 	getPosts()
+	getAllUsers()
 }, [])
 
 // Get all the posts
@@ -61,7 +63,7 @@ const addNewPost = async (addPost) => {
 
 		const newPostJson = await newPostResponse.json()
 		
-		console.log(newPostJson.status)
+		console.log(newPostResponse.status)
 		
 		if (newPostJson.status === 201) {
 
@@ -170,6 +172,31 @@ const closeUserModal = () => setIdOfUserToEdit(-1)
 
 // USER ROUTES STARTS HERE
 
+// GET Route --> for all the users
+const getAllUsers = async () => {
+	try {
+		const url = process.env.REACT_APP_API_URL + "/users"
+
+		const usersResponse = await fetch(url, {
+			credentials: 'include'
+		})
+
+		const usersJson = await usersResponse.json()
+
+		setUsers(usersJson.data)
+
+		console.log("usersJson")
+		console.log(usersJson)
+	}
+
+	catch (err) {
+		console.error(err)
+	}	
+}
+
+
+
+
 // Get Route --> Edit User
 const editUserProfile = (idOfUserToEdit) => setIdOfUserToEdit(idOfUserToEdit)
 
@@ -190,15 +217,14 @@ const updateUser = async (updateUser) => {
 		const updateUserJson = await updateUserResponse.json()
 
 		if (updateUserResponse.status === 200) {
-			let idOfUserToBeUpdated = userProfile._id
-			idOfUserToBeUpdated = updateUserJson.data
+		
 
-			setUpdateUserProfile(idOfUserToBeUpdated)
+			setUserProfile(updateUserJson.data)
 			setIdOfUserToEdit(-1)
 
 
 			console.log("userProfile in update")
-			console.log(updateUserProfile)
+
 
 
 		}
@@ -209,6 +235,10 @@ const updateUser = async (updateUser) => {
 	}
 
 }	
+
+
+
+
 
 return(
 		<React.Fragment>
@@ -228,6 +258,8 @@ return(
 			<ViewProfile
 			userProfile={userProfile}
 			editUserProfile={editUserProfile}
+			updateUser={updateUser}
+			deleteUser={deleteUser}
 			/>
 
 			{
@@ -237,7 +269,7 @@ return(
 				<EditUser
 				closeUserModal={closeUserModal} 
 				updateUser={updateUser}
-				userToEdit = { userProfile._id }
+				userToEdit = { userProfile }
 				/>
 			</div>
 			}

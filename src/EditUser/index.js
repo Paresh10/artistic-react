@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Modal, Header } from 'semantic-ui-react'
 
 export default function EditUser({updateUser, userToEdit, closeUserModal}) {
 	  const [user, setUser] = useState(userToEdit)
+
+
 
 	  const handleChange = event => setUser({ ...user, [event.target.name]: event.target.value })
 
