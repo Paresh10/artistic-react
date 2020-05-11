@@ -3,12 +3,18 @@ import PostsList from '../PostsList'
 import PostNewForm from '../PostNewForm'
 import ShowPost from '../ShowPost'
 import EditPost from '../EditPost'
+import ViewProfile from '../ViewProfile'
+import EditUser from '../EditUser'
 
-export default function MainContainer({loggedInUserId}) {
+export default function MainContainer({userProfile, loggedInUserId, message, buttonClick}) {
 	const [posts, setPosts] = useState([])
 	const [showPostById, setShowPostById] = useState('')
 	const [action, setAction] = useState('')
 	const [idOfPostToEdit, setIdOfPostToEdit] = useState(-1)
+
+	// Users
+	const [idOfUserToEdit, setIdOfUserToEdit] = useState(-1)
+	const [updateUserProfile, setUpdateUserProfile] = useState(userProfile)
 
 
 
@@ -80,14 +86,10 @@ const postToView = async (postId) => {
 
 		const showPostJson = await showPostResponse.json()
 
-		console.log("showPostJson")
-		console.log(showPostJson)
-
 		setShowPostById(showPostJson.data)
 		setAction('showPost')
 
-		console.log("showPostById")
-		console.log(showPostById)
+
 	}
 	catch (err) {
 		console.error(err)
@@ -156,24 +158,61 @@ const updatePost = async (updatePost) => {
 
 }
 
-// Close Modal
+// Close Modal --> Post
 const closeModal = () => setIdOfPostToEdit(-1)
 
+// Close Modal --> User
+const closeUserModal = () => setIdOfUserToEdit(-1)
 
 
 
 
 
+// USER ROUTES STARTS HERE
+
+// Get Route --> Edit User
+const editUserProfile = (idOfUserToEdit) => setIdOfUserToEdit(idOfUserToEdit)
+
+// PUT Route --> Update user
+const updateUser = async (updateUser) => {
+	const url = process.env.REACT_APP_API_URL + `/users/` + idOfUserToEdit
+
+	try {
+		const updateUserResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify(updateUser),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const updateUserJson = await updateUserResponse.json()
+
+		if (updateUserResponse.status === 200) {
+			let idOfUserToBeUpdated = userProfile._id
+			idOfUserToBeUpdated = updateUserJson.data
+
+			setUpdateUserProfile(idOfUserToBeUpdated)
+			setIdOfUserToEdit(-1)
 
 
+			console.log("userProfile in update")
+			console.log(updateUserProfile)
 
 
+		}
 
+	}
+	catch (err) {
+		console.error(err)
+	}
 
-
+}	
 
 return(
 		<React.Fragment>
+
 		{
 			action === "showPost"
 			&&
@@ -185,6 +224,23 @@ return(
 			/>
 
 		}
+
+			<ViewProfile
+			userProfile={userProfile}
+			editUserProfile={editUserProfile}
+			/>
+
+			{
+				idOfUserToEdit !== -1
+				&&
+			<div>
+				<EditUser
+				closeUserModal={closeUserModal} 
+				updateUser={updateUser}
+				userToEdit = { userProfile._id }
+				/>
+			</div>
+			}
 
 
 
@@ -205,6 +261,7 @@ return(
 
 			<PostNewForm 
 			addNewPost={addNewPost}/>
+			<p style={{textAlign: 'center'}}> Hey {message}! </p>
 
 		{
 			posts.length > 0

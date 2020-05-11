@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import {  Modal, Header, Button, Image } from 'semantic-ui-react'
-
-export default function ShowPost({editPost, showPostById, deletePost, loggedInUserId}){
+import { Modal, Button, Image, Header } from 'semantic-ui-react'
 
 
+export default function ViewProfile({userProfile, editUserProfile }) {
 
-	return(
+
+return(
 		<Modal trigger={<Button 
 		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
-		See full Post
+		ViewProfile
 		</Button>}
 		closeIcon={true}
 		>
 
 		<Modal.Header style={{ color: '#816687' }}>
-			Posted by: – {showPostById.user.name}
+			{userProfile.name}
 		</Modal.Header>
 
 		<Modal.Content image>
@@ -22,32 +22,34 @@ export default function ShowPost({editPost, showPostById, deletePost, loggedInUs
 
 		  <Modal.Description>
 		  	<Header>
-		  		Modal Header
+		  		{userProfile.occupation}
 		  	</Header>
-		  	<p>
-		  		{showPostById.body}
-		  	</p>
+
+		  	<Modal.Description>
+		  		<h5> {userProfile.from} </h5>
+		  	</Modal.Description>
+
+		  	<p>	{userProfile.about} </p>
+
 		  </Modal.Description>
 		</Modal.Content>
-	{
-			loggedInUserId === showPostById.user._id
-			&&
+	
 		
 		<Modal.Actions>
 			<Button
-			onClick={() => {editPost(showPostById._id)}} 
+			onClick={() => {editUserProfile(userProfile._id)}}
 			style={{backgroundColor: '#816687', color: 'white'}} 
 			type="Submit"> 
 				Edit 
 			</Button>
 			<Button
-			onClick={() => {deletePost(showPostById._id)}} 
+
 			style={{backgroundColor: '#816687', color: 'white'}} 
 			type="Submit"> 
 				Delete 
 			</Button>						
 		</Modal.Actions>
-	}
+
 		</Modal>
 	)
 }

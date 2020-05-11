@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import LoginSignUpForm from './LoginSignUpForm'
 import MainContainer from './MainContainer'
+import { Button } from 'semantic-ui-react'
 
 
 export default function App() {
@@ -9,6 +10,9 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [loggedInUserEmail, setLoggedInUserEmail] = useState('')
   const [loggedInUserId, setLoggedInUserId] = useState(null)
+  const [message, setMessage] = useState('')
+  const [buttonClick, setButtonClick] = useState('')
+  const [userProfile, setUserProfile] = useState({})
 
 
 // Sign up route
@@ -33,7 +37,10 @@ export default function App() {
       if (signupResponse.status === 200) {
         setLoggedIn(true)
         setLoggedInUserEmail(signupJson.data.email)
+        setMessage(signupJson.data.name)
       }
+
+     
     }
     catch (err) {
       console.error(err)
@@ -60,17 +67,27 @@ const login = async (loginInfo) => {
         console.log("loginJson")
         console.log(loginJson)
 
+
     if (loginResponse.status === 200) {
       setLoggedIn(true)
       setLoggedInUserEmail(loginJson.data.email)
       setLoggedInUserId(loginJson.data._id)
+      setMessage(loginJson.data.name)
+
+      setUserProfile(loginJson.data)
+
+    }
+
+    else {
+      setLoggedIn(false)
+      setMessage(`Username or Password is invalid`)
     }
 
   }
   catch(err) {
     console.error(err)
   }
-}
+} 
 
 
 // Logout route
@@ -94,13 +111,27 @@ const logout = async () => {
   }
 }
 
+// SetAction here
+const setStatus = () => setButtonClick('New Action')
+
+
+    /* <Button
+        onClick={() => setButtonClick("ViewProfile")}
+        > View Profile
+    </Button> */
 
   return (
-    <div className="App">
+    <React.Fragment>
+    <div>
+
+    </div>
     {
-      loggedIn === true
+      loggedIn
       ?
-      <MainContainer 
+      <MainContainer
+      userProfile={userProfile}
+      buttonClick={buttonClick}
+      message={message} 
       loggedInUserId={loggedInUserId}
       />
       :
@@ -109,7 +140,7 @@ const logout = async () => {
     signup={signup}
     />
   }
-    </div>
+    </React.Fragment>
   );
 }
 
