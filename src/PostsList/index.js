@@ -29,6 +29,13 @@ export default function PostsList(props) {
 
 					</Card.Content>
 
+					{
+						 post.postPicture
+							&&
+					<Card.Content extra>
+						<Image src=	{post.postPicture} />
+					</Card.Content>
+					}
 
 					<Card.Content extra>
 					<div className="ui three buttons">

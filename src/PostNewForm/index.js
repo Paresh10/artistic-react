@@ -4,13 +4,45 @@ import { Form, Button, Modal, Header, Icon } from 'semantic-ui-react'
 export default function PostNewForm({addNewPost }) {
 
 	const [post, setPost] = useState({
-		body: ''
+		body: '',
+		postPicture: ''
 	})
 
 
+const uploadPicture = async (event) => {
 
-  const handleChange = event => setPost({ ...post, [event.target.name]: event.target.value })
+    const files = event.target.files 
 
+
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "paresh");
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dy5lodsfm/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await response.json();
+
+    console.log("file")
+    console.log(file)
+    console.log(file.secure_url);
+    
+    setPost({
+    	postPicture: file.secure_url
+    })
+  }
+
+
+
+// const handleChange = event => setPost({ ...post, [event.target.name]: event.target.value })
+const handleChange = (event) => {
+	setPost({
+		body: event.target.value
+	})
+}
 
 const handleSubmit = (event) => {
 	event.preventDefault()
@@ -39,6 +71,12 @@ return(
 				value={post.body}
 				placeholder='What would you like to share?'
 				onChange={handleChange}
+				/>
+
+				<Form.Input
+				type='file'
+				name='postPicture'
+				onChange={uploadPicture}	
 				/>
 
 				<Modal.Actions>

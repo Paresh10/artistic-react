@@ -17,12 +17,37 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 	const [users, setUsers] = useState([])
 	const [loggedIn, setLoggedIn] = useState(false)
 
+	// IMAGE upload with cloudunary
+	const [image, setImage] = useState('')
+
+
 
 
 useEffect(() => {
 	getPosts()
 	getAllUsers()
 }, [])
+
+
+const uploadImage = async image => {
+    const files = image.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "paresh");
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dy5lodsfm/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await response.json();
+    console.log(file.secure_url);
+    this.setState({
+      image: file.secure_url
+    });
+  };
+
 
 // Get all the posts
 const getPosts = async () => {
