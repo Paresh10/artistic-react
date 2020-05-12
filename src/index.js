@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-time-ago/Tooltip.css'
+import JavascriptTimeAgo from 'javascript-time-ago'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import en from 'javascript-time-ago/locale/en'
+JavascriptTimeAgo.locale(en)
+
 
 ReactDOM.render(
 

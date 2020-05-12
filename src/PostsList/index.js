@@ -1,18 +1,22 @@
 import React from 'react'
 import { Card, Icon, Image, Button} from 'semantic-ui-react'
+import ReactTimeAgo from 'react-time-ago/tooltip'
+
 
 export default function PostsList(props) {
 
-	const posts = props.posts.map((post) => {
-		return(
 
+	const posts = props.posts.map((post) => {
+		
+		return(
+	
 			<Card.Group key={post._id} style={{ margin: '10px'}}>
 				<Card>
 					<Card.Content>
 						<Image
 						floated='left'
           				size='mini'
-          				src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSE9QAnM-RsJuta8SNp___18t9xWTyJ9Q_QBjNpcpFJNFa2zKh4Wg5-iTG43mqmqa2YdYznun07&usqp=CAc'
+          				src={post.user.profilePicture}
 						/>
 
 						<Card.Header>
@@ -20,11 +24,15 @@ export default function PostsList(props) {
 						</Card.Header>
 
 						<Card.Meta>
+
 							{post.posted}
+
 						</Card.Meta>
 
 						<Card.Description>
-							{post.body}
+
+						{post.body}
+							
 						</Card.Description>
 
 					</Card.Content>

@@ -18,11 +18,11 @@ export default function ShowPost({ userProfile, editPost, showPostById, deletePo
 		</Modal.Header>
 
 		<Modal.Content image>
-		  <Image wrapped size='medium' src='https://react.semantic-ui.com/images/wireframe/image.png' />
+		  <Image wrapped size='medium' src={showPostById.postPicture} />
 
 		  <Modal.Description>
 		  	<Header>
-		  		Modal Header
+		  		
 		  	</Header>
 		  	<p>
 		  		{showPostById.body}

@@ -5,6 +5,7 @@ import MainContainer from './MainContainer'
 import { Button } from 'semantic-ui-react'
 
 
+
 export default function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
@@ -12,7 +13,9 @@ export default function App() {
   const [loggedInUserId, setLoggedInUserId] = useState(null)
   const [message, setMessage] = useState('')
   const [buttonClick, setButtonClick] = useState('')
-  const [userProfile, setUserProfile] = useState({})
+  const [userProfile, setUserProfile] = useState({
+    profilePicture: ''
+  })
   const [users, setUsers] = useState([])
 
 
@@ -170,7 +173,9 @@ const setStatus = () => setButtonClick('New Action')
     {
       loggedIn === true
       ?
+         <div>
       <MainContainer
+      setUserProfile={setUserProfile}
       userProfile={userProfile}
       buttonClick={buttonClick}
       loggedIn={loggedIn}
@@ -178,6 +183,9 @@ const setStatus = () => setButtonClick('New Action')
       loggedInUserId={loggedInUserId}
       deleteUser={deleteUser}
       />
+   
+
+      </div>
       :
       <LoginSignUpForm
       message={message} 

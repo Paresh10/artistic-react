@@ -13,6 +13,38 @@ export default function EditUser({updateUser, userToEdit, closeUserModal}) {
 	    updateUser(user)
 	  }
 
+
+	const uploadProfilePicture = async (event) => {
+
+    const files = event.target.files 
+
+
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "paresh");
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dy5lodsfm/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await response.json();
+
+    console.log("file")
+    console.log(file)
+    console.log(file.secure_url);
+    
+    setUser({
+    	profilePicture: file.secure_url
+	   })
+	 }
+
+
+
+
+
+
 	  return(
 	   <Modal open={true} closeIcon={true} onClose={closeUserModal}> 
 	     <Header>
@@ -54,6 +86,12 @@ export default function EditUser({updateUser, userToEdit, closeUserModal}) {
 	            onChange={handleChange}
 	          />
 
+	          	<Form.Input
+	          	label="Upload Picture"  
+	            type="file"
+	            name="profilePictire"
+	            onChange={uploadProfilePicture}
+	          />
 
 	          <Modal.Actions>
 	            <Button 

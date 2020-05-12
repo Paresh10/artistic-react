@@ -19,7 +19,7 @@ return(
 		</Modal.Header>
 
 		<Modal.Content image>
-		  <Image wrapped size='medium' src='https://react.semantic-ui.com/images/wireframe/image.png' />
+		  <Image wrapped size='medium' src={userProfile.profilePicture} />
 
 		  <Modal.Description>
 		  	<Header>
