@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Modal, Button, Image, Header, Icon } from 'semantic-ui-react'
 
 	
 
-export default function ViewOtherUserProfile({posts, closeOtherUserModal, viewOtherUsersProfile, showOtherUsersProfile}) {
+export default function ViewOtherUserProfile({posts,createFriendRequest, showOtherUsersProfile}) {
 
 const [findUsersPost, setFindUsersPost] = useState(posts)
 const [idOfOtherUser, setIdOfOtherUser] = useState(-1)
@@ -84,7 +84,7 @@ return(
 		
 		<Modal.Actions>
 			<Button
-			// onClick={() => {editUserProfile(userProfile._id)}}
+			onClick={() => {createFriendRequest(showOtherUsersProfile._id)}}
 			style={{backgroundColor: '#816687', color: 'white'}} 
 			type="Submit"> 
 				Add Friend 

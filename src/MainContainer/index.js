@@ -22,7 +22,12 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 	const [showOtherUsersProfile, setShowOtherUsersProfile] = useState('')
 	const [otherUserId, setOtherUserId] = useState(null)
 
+	// Setting up conditional rendering of OtherUserProfile
 	const [verbal, setVerbal] = useState('NotTrue')
+
+
+	// setting up friendRequest 
+	const [friendRequest, setFriendRequest] = useState('')
 
 
 
@@ -180,8 +185,7 @@ const closeModal = () => setIdOfPostToEdit(-1)
 // Close Modal --> User
 const closeUserModal = () => setIdOfUserToEdit(-1)
 
-// Close Modal Other User
-const closeOtherUserModal = () => setOtherUserId(-1)
+
 
 
 
@@ -276,8 +280,44 @@ const viewOtherUsersProfile = async (otherUserId) => {
 }
 
 
-console.log('Verbal')
-console.log(verbal)
+// Add Frind
+const createFriendRequest = async (createRequest) => {
+	try {
+
+		const url = process.env.REACT_APP_API_URL + '/requests/createrequest/' + showOtherUsersProfile._id
+
+		const createFriendRequestResponse = await fetch(url, {
+
+			credentials: 'include',
+			method: 'POST',
+			body: JSON.stringify(createRequest),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const createRequestJson = await createFriendRequestResponse.json()
+			
+		console.log(createFriendRequestResponse.status)
+		
+		if (createFriendRequestResponse.status === 201) {
+
+			setFriendRequest(createRequestJson.request)
+		}
+
+		console.log("createRequestJson")
+		console.log(createRequestJson)
+	}
+
+	catch (err) {
+		console.error(err)	
+	}
+}
+
+
+
+
+
 
 return(
 		<React.Fragment>
@@ -337,7 +377,7 @@ return(
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			posts={posts} 
 			showOtherUsersProfile={showOtherUsersProfile}
-			closeOtherUserModal={closeOtherUserModal}
+			createFriendRequest={createFriendRequest}
 			/>
 		}
 			
