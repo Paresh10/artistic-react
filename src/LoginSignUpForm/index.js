@@ -13,35 +13,6 @@ export default function LoginSignForm({login, signup, message}) {
 
 
 
-	const uploadProfilePicture = async (event) => {
-
-    const files = event.target.files 
-
-
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "paresh");
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dy5lodsfm/image/upload",
-      {
-        method: "POST",
-        body: data
-      }
-    );
-    const file = await response.json();
-
-    console.log("file")
-    console.log(file)
-    console.log(file.secure_url);
-    
-    setUserInfo({
-    	profilePicture: file.secure_url
-    })
-  }
-
-
-
-
 
 	const [action, setAction] = useState('Login')
 

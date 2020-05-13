@@ -27,11 +27,16 @@ return(
 		  	</Header>
 
 		  	<Modal.Description>
-		  		<h5> {userProfile.from} </h5>
+		  		<h5> From - {userProfile.from} </h5>
 		  	</Modal.Description>
 
-		  	<p>	{userProfile.about} </p>
-
+		  	<Modal.Content>
+		  		<Header>	
+		  			About - 
+		  		</Header>
+		  		{userProfile.about} 
+		  	</Modal.Content>
+		  
 		  </Modal.Description>
 		</Modal.Content>
 	

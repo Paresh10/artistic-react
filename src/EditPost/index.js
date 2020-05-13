@@ -13,6 +13,35 @@ export default function EditPost({postToEdit, updatePost, closeModal}) {
     updatePost(post)
   }
 
+
+  const uploadPicture = async (event) => {
+
+    const files = event.target.files 
+
+
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "paresh");
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dy5lodsfm/image/upload",
+      {
+        method: "POST",
+        body: data
+      }
+    );
+    const file = await response.json();
+
+    console.log("file")
+    console.log(file)
+    console.log(file.secure_url);
+    
+    setPost({
+      postPicture: file.secure_url
+    })
+  }
+
+
+
   return(
    <Modal open={true} closeIcon={true} onClose={closeModal}> 
      <Header>
@@ -26,6 +55,12 @@ export default function EditPost({postToEdit, updatePost, closeModal}) {
             value={post.body}
             onChange={handleChange}
           />
+
+          <Form.Input 
+            type="file"
+            name="postPicture"
+            onChange={uploadPicture}
+          />          
     
           <Modal.Actions>
             <Button type="Submit">Update Post</Button>

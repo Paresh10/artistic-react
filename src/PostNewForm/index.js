@@ -29,6 +29,7 @@ const uploadPicture = async (event) => {
     console.log("file")
     console.log(file)
     console.log(file.secure_url);
+
     
     setPost({
     	postPicture: file.secure_url

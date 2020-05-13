@@ -5,6 +5,7 @@ import ShowPost from '../ShowPost'
 import EditPost from '../EditPost'
 import ViewProfile from '../ViewProfile'
 import EditUser from '../EditUser'
+import ViewOtherUserProfile from '../ViewOtherUserProfile'
 
 export default function MainContainer({ userProfile, setUserProfile, loggededIn, loggedInUserId, message, deleteUser, buttonClick}) {
 	const [posts, setPosts] = useState([])
@@ -17,6 +18,11 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 	const [users, setUsers] = useState([])
 	const [loggedIn, setLoggedIn] = useState(false)
 
+	//OtherUsersProfile
+	const [showOtherUsersProfile, setShowOtherUsersProfile] = useState('')
+	const [otherUserId, setOtherUserId] = useState(null)
+
+	const [verbal, setVerbal] = useState('NotTrue')
 
 
 
@@ -133,6 +139,9 @@ const editPost = (idOfPostToEdit) => setIdOfPostToEdit(idOfPostToEdit)
 const updatePost = async (updatePost) => {
 	const url = process.env.REACT_APP_API_URL + `/posts/` + idOfPostToEdit
 
+	console.log("updatePost")
+	console.log(updatePost)
+
 	try {
 		const updatePostResponse = await fetch(url, {
 			credentials: 'include',
@@ -170,6 +179,9 @@ const closeModal = () => setIdOfPostToEdit(-1)
 
 // Close Modal --> User
 const closeUserModal = () => setIdOfUserToEdit(-1)
+
+// Close Modal Other User
+const closeOtherUserModal = () => setOtherUserId(-1)
 
 
 
@@ -242,8 +254,30 @@ const updateUser = async (updateUser) => {
 }	
 
 
+// VIEW OTHER USER'S PROFILE
+const viewOtherUsersProfile = async (otherUserId) => {
+	try {
+		const url = process.env.REACT_APP_API_URL + '/users/checkprofile/' + otherUserId
+
+		const showOtherUsersProfileResponse = await fetch(url, {
+			credentials: 'include'
+		})
+
+		const showOtherUsersProfileJson = await showOtherUsersProfileResponse.json()
+
+		console.log("showOtherUsersProfileJson")
+		console.log(showOtherUsersProfileJson)
+
+		setShowOtherUsersProfile(showOtherUsersProfileJson.data)
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
 
 
+console.log('Verbal')
+console.log(verbal)
 
 return(
 		<React.Fragment>
@@ -295,7 +329,18 @@ return(
 			/>
 		</div>
 		}
-	
+
+		{
+			verbal === 'True'
+			&&
+			<ViewOtherUserProfile
+			viewOtherUsersProfile={viewOtherUsersProfile}
+			posts={posts} 
+			showOtherUsersProfile={showOtherUsersProfile}
+			closeOtherUserModal={closeOtherUserModal}
+			/>
+		}
+			
 
 			<PostNewForm 
 			addNewPost={addNewPost}/>
@@ -307,6 +352,8 @@ return(
 			<PostsList 
 			posts={posts}
 			postToView={postToView}
+			viewOtherUsersProfile={viewOtherUsersProfile}
+			setVerbal={setVerbal}
 			/>
 		}
 		</React.Fragment>

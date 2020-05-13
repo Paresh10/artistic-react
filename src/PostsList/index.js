@@ -20,7 +20,15 @@ export default function PostsList(props) {
 						/>
 
 						<Card.Header>
+
+						<a 
+						onClick={() => 
+							{ props.viewOtherUsersProfile(post.user._id); 
+								props.setVerbal('True')}}
+								>
 							{post.user.name}
+						</a>
+
 						</Card.Header>
 
 						<Card.Meta>
@@ -41,7 +49,7 @@ export default function PostsList(props) {
 						 post.postPicture
 							&&
 					<Card.Content extra>
-						<Image src=	{post.postPicture} />
+						<Image src=	{post.postPicture} style={{width: '100%', padding: '0'}}/>
 					</Card.Content>
 					}
 
@@ -72,6 +80,7 @@ export default function PostsList(props) {
 		<Card.Group>
 			{posts}
 		</Card.Group>
+
 	)
 }
 
