@@ -42,6 +42,8 @@ export default function App() {
         setLoggedIn(true)
         setLoggedInUserEmail(signupJson.data.email)
         setMessage(signupJson.data.name)
+
+        setUserProfile(signupJson.data)
       }
     else {
       setLoggedIn(false)

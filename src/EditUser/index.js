@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Modal, Header } from 'semantic-ui-react'
 
 export default function EditUser({updateUser, userToEdit, closeUserModal}) {

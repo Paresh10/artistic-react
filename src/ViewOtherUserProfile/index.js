@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState  } from 'react'
 import { Modal, Button, Image, Header, Icon } from 'semantic-ui-react'
 
 	
 
-export default function ViewOtherUserProfile({posts,createFriendRequest, showOtherUsersProfile}) {
+export default function ViewOtherUserProfile
+({posts,createFriendRequest, setRequests, userProfile, requests, showOtherUsersProfile}) 
+{
 
 const [findUsersPost, setFindUsersPost] = useState(posts)
 const [idOfOtherUser, setIdOfOtherUser] = useState(-1)
+
+const [requestSentStatus, setRequestSentStatus] = useState('NotSent')
 
 const [state, setState] = useState({
 	open: false
@@ -23,23 +27,11 @@ const closeModal = () => setState({
 
 
 
-// let post = ''
 
-// const findUserPost = ()  => {
 
-// 	for (let i = 0; i < posts.length; i++) {
-// 		if (posts[i].user._id === showOtherUsersProfile._id)
+// const condtionalRendering = userProfile.pendingRequest.map((userSendingRequestId) => {
 
-// 			post  = posts[i].user.name
-// 			console.log('post')
-// 			console.log(post)
-// 	}
-
-// }
-	
-	/*
-
-	*/
+// })
 
 
 return(
@@ -81,16 +73,28 @@ return(
 		  </Modal.Description>
 		</Modal.Content>
 	
-		
+
 		<Modal.Actions>
+
+		{
+			userProfile.pendingRequest.includes(showOtherUsersProfile._id) || requestSentStatus === 'Sent' 
+			?
+			<p> Request Sent </p>
+			:
 			<Button
-			onClick={() => {createFriendRequest(showOtherUsersProfile._id)}}
+			onClick={() => {createFriendRequest(setRequests); setRequestSentStatus('Sent')}}
 			style={{backgroundColor: '#816687', color: 'white'}} 
-			type="Submit"> 
+			type="Submit">
+
 				Add Friend 
 			</Button>
-					
+		}
+
+
+
 		</Modal.Actions>
+
+		
 
 		</Modal>
 	)

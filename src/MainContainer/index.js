@@ -6,6 +6,13 @@ import EditPost from '../EditPost'
 import ViewProfile from '../ViewProfile'
 import EditUser from '../EditUser'
 import ViewOtherUserProfile from '../ViewOtherUserProfile'
+import Notifications from '../Notifications'
+
+
+
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+
+
 
 export default function MainContainer({ userProfile, setUserProfile, loggededIn, loggedInUserId, message, deleteUser, buttonClick}) {
 	const [posts, setPosts] = useState([])
@@ -27,14 +34,19 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
 
 	// setting up friendRequest 
-	const [friendRequest, setFriendRequest] = useState('')
+	const [friendRequest, setFriendRequest] = useState([])
 
+	// Get All Friend Request
+	const [requests, setRequests] = useState([])
 
+	const [acceptOrDeclineFriendRequest, setAcceptOrDeclineFriendRequest] = useState(false)
+	
 
 
 useEffect(() => {
 	getPosts()
 	getAllUsers()
+	getAllFreindRequests()
 }, [])
 
 
@@ -52,6 +64,7 @@ const getPosts = async () => {
 		const postsJson = await postsResponse.json()
 
 		setPosts(postsJson.data)
+		getAllUsers()
 
 		console.log("postsJson")
 		console.log(postsJson)
@@ -85,6 +98,8 @@ const addNewPost = async (addPost) => {
 
 			setPosts([...posts, newPostJson.data])
 		}
+
+		getPosts()
 	}
 
 	catch (err) {
@@ -130,6 +145,8 @@ const deletePost = async (postId) => {
 		if (deletePostResponse.status === 200) {
 			setPosts(posts.filter(post => post._id !== postId))
 		}
+
+		getPosts()
 	}
 	catch (err) {
 		console.error(err)
@@ -169,6 +186,8 @@ const updatePost = async (updatePost) => {
 			console.log("post in update")
 			console.log(posts)
 		}
+
+		getPosts()
 
 
 	}
@@ -243,6 +262,8 @@ const updateUser = async (updateUser) => {
 			setUserProfile(updateUserJson.data)
 			setIdOfUserToEdit(-1)
 
+			getAllUsers()
+
 
 			console.log("userProfile in update")
 
@@ -286,6 +307,9 @@ const createFriendRequest = async (createRequest) => {
 
 		const url = process.env.REACT_APP_API_URL + '/requests/createrequest/' + showOtherUsersProfile._id
 
+		console.log("url")
+		console.log(url)
+
 		const createFriendRequestResponse = await fetch(url, {
 
 			credentials: 'include',
@@ -300,9 +324,9 @@ const createFriendRequest = async (createRequest) => {
 			
 		console.log(createFriendRequestResponse.status)
 		
-		if (createFriendRequestResponse.status === 201) {
+		if (createFriendRequestResponse.status === 200) {
 
-			setFriendRequest(createRequestJson.request)
+			setRequests([createRequestJson.request])
 		}
 
 		console.log("createRequestJson")
@@ -316,11 +340,82 @@ const createFriendRequest = async (createRequest) => {
 
 
 
+	
+
+// Get all the friend request 
+const getAllFreindRequests = async () => {
+	try {
+
+		const url = process.env.REACT_APP_API_URL + '/requests/'
+
+		const allRequestsResponse = await fetch(url, {
+			credentials: 'include'
+		})
+
+		const allRequestsJson = await allRequestsResponse.json()
+
+		setRequests(allRequestsJson.data)
+
+		console.log("allRequestsJson")
+		console.log(allRequestsJson)
+	}
+	catch (err) {
+		console.error(err)
+	}
+} 
+
+
+// Approve or Decline friend request
+const acceptOrDeclineRequest = async (requestId) => {
+	try {
+
+		const url = process.env.REACT_APP_API_URL + '/requests/notifications/' + requestId
+
+
+		const findNotificationsResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'POST',
+			body: JSON.stringify(acceptOrDeclineRequest),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+
+		})
+		const findNotificationsJson = await findNotificationsResponse.json()
+			
+			console.log(findNotificationsResponse.status)
+			console.log(findNotificationsJson)
+		
+			if (findNotificationsResponse.status === 200) {
+
+				setRequests([findNotificationsJson.data])
+			}
+
+
+			console.log("findNotificationsJson")
+			console.log(findNotificationsJson)
+			
+			// Call getAllRequest here
+			getAllFreindRequests()
+		}
+
+		
+	catch (err) {
+		console.error(err)
+	}
+}
+
+	
+
+
+
 
 
 
 return(
 		<React.Fragment>
+
+
 
 		{
 			action === "showPost"
@@ -340,7 +435,9 @@ return(
 			updateUser={updateUser}
 			deleteUser={deleteUser}
 			/>
-
+			
+			
+			
 			{
 				idOfUserToEdit !== -1
 				&&
@@ -353,6 +450,17 @@ return(
 				/>
 			</div>
 			}
+		
+
+
+			<Notifications 
+			showOtherUsersProfile={showOtherUsersProfile}
+			requests={requests}
+			userProfile={userProfile}
+			viewOtherUsersProfile={viewOtherUsersProfile}
+			acceptOrDeclineRequest={acceptOrDeclineRequest}
+			/>	
+
 
 
 
@@ -378,6 +486,9 @@ return(
 			posts={posts} 
 			showOtherUsersProfile={showOtherUsersProfile}
 			createFriendRequest={createFriendRequest}
+			setRequests={setRequests}
+			requests={requests}
+			userProfile={userProfile}
 			/>
 		}
 			
@@ -396,6 +507,7 @@ return(
 			setVerbal={setVerbal}
 			/>
 		}
+
 		</React.Fragment>
 	)
 

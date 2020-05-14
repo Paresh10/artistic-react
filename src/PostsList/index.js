@@ -80,7 +80,7 @@ export default function PostsList(props) {
 		<Card.Group>
 			{posts}
 		</Card.Group>
-
+		
 	)
 }
 
