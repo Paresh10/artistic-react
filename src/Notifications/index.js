@@ -3,6 +3,16 @@ import { Modal, Feed, Button } from 'semantic-ui-react'
 
 export default function Notifications({userProfile, requests, acceptOrDeclineFriendRequest, viewOtherUsersProfile, acceptOrDeclineRequest, showOthereUsersProfile}) {
 
+		
+const findNotifications = requests.map((request) => {
+
+	if (request.recipient._id == userProfile._id) {
+	 	console.log("request in the function")
+		console.log(request)
+	 }  
+
+
+})	
 
 return (
 
@@ -18,13 +28,8 @@ return (
     </Modal.Content>
     <Modal.Content>
 
-			{
-				<React.Fragment>
-				findNotifications = requests.map((request) => {
-					if (request.recipient._id == userProfile._id ) {
+			
 	
-		console.log("request in the function")
-		console.log(request)
       <Feed>
         <Feed.Event>
           <Feed.Label image={request.sender.profilePicture} />
@@ -55,12 +60,9 @@ return (
         </Feed.Event>
 
       </Feed>
-      </React.Fragment>
+   
 
-     }
-   }) 
-
-  } 
+  
     </Modal.Content>
 	
   </Modal>
