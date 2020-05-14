@@ -3,16 +3,40 @@ import { Modal, Feed, Button } from 'semantic-ui-react'
 
 export default function Notifications({userProfile, requests, acceptOrDeclineFriendRequest, viewOtherUsersProfile, acceptOrDeclineRequest, showOthereUsersProfile}) {
 
-		
-const findNotifications = requests.map((request) => {
 
-	if (request.recipient._id == userProfile._id) {
-	 	console.log("request in the function")
-		console.log(request)
-	 }  
+const completeFeedList = requests.map((req) => {
+				return(
+					<Feed.Summary>
+
+		              <a onClick={() => 
+		              	{viewOtherUsersProfile(req.sender._id)}}>
+		              		{req.sender.name} </a> 
+		              		 sent you a friend request
+			         	 
+			         	 <Button id={req._id}
+			         	 onClick={(event) => {acceptOrDeclineRequest(event.target.id)}}
+			         	 style={{size: 'mini', marginLeft: '20px', marginRight: '10px'}} 
+			         	 basic color='green'>
+			            	Approve
+			          	</Button>
+
+			          	<Button	
+			          	onClick={(event) => {acceptOrDeclineRequest(event.target.id)}}
+			          	basic color='red'>
+			            	Decline
+			          	</Button>
+			        </Feed.Summary>		
+				)
 
 
-})	
+			})		
+
+console.log("completeFeedList")
+console.log(completeFeedList)
+console.log("request in notifications")
+console.log(requests)
+
+
 
 return (
 
@@ -28,34 +52,17 @@ return (
     </Modal.Content>
     <Modal.Content>
 
-			
-	
       <Feed>
         <Feed.Event>
-          <Feed.Label image={request.sender.profilePicture} />
+          <Feed.Label image="{request.sender.profilePicture}" />
           <Feed.Content>
             <Feed.Date content='' />
 
+            {
+            	completeFeedList
+            }
+       	 
 
-            <Feed.Summary> 
-              <a onClick={() => 
-              	{viewOtherUsersProfile(request.sender._id)}}>
-              		{request.sender.name} </a> 
-              		sent you a friend request 
-	         	 
-	         	 <Button id={request._id} 
-	         	 onClick={(event) => {acceptOrDeclineRequest(event.target.id)}}
-	         	 style={{size: 'mini', marginLeft: '20px', marginRight: '10px'}} 
-	         	 basic color='green'>
-	            	Approve
-	          	</Button>
-
-	          	<Button>
-	          	onClick={(event) => {acceptOrDeclineRequest(event.target.id)}}
-	          	basic color='red'>
-	            	Decline
-	          	</Button>
-            </Feed.Summary>
           </Feed.Content>
         </Feed.Event>
 
@@ -70,11 +77,11 @@ return (
 
 
 
-// return(
-// 	<div>
-// 		{findNotifications}
-// 	</div>
-// )
+return(
+	<div>
+		{completeFeedList}
+	</div>
+)
 
 
 }

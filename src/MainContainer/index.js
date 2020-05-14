@@ -346,7 +346,7 @@ const createFriendRequest = async (createRequest) => {
 const getAllFreindRequests = async () => {
 	try {
 
-		const url = process.env.REACT_APP_API_URL + '/requests/'
+		const url = process.env.REACT_APP_API_URL + '/requests/friendsrequests'
 
 		const allRequestsResponse = await fetch(url, {
 			credentials: 'include'
@@ -405,7 +405,9 @@ const acceptOrDeclineRequest = async (requestId) => {
 	}
 }
 
-	
+				
+
+
 
 
 
@@ -452,14 +454,14 @@ return(
 			}
 		
 
-
 			<Notifications 
 			showOtherUsersProfile={showOtherUsersProfile}
-			requests={requests}
 			userProfile={userProfile}
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			acceptOrDeclineRequest={acceptOrDeclineRequest}
+			requests={requests}
 			/>	
+
 
 
 
