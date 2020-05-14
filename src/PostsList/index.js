@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Icon, Image, Button} from 'semantic-ui-react'
+import { Card, Icon, Image, Button, Label		} from 'semantic-ui-react'
 import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
@@ -21,7 +21,7 @@ export default function PostsList(props) {
 
 						<Card.Header>
 
-						<a 
+						<a style={{ color: '#816687'}}
 						onClick={() => 
 							{ props.viewOtherUsersProfile(post.user._id); 
 								props.setVerbal('True')}}
@@ -54,16 +54,16 @@ export default function PostsList(props) {
 					}
 
 					<Card.Content extra>
-					<div className="ui three buttons">
-						<Button basic color='grey'>
+					<div className="ui three mini buttons">
+						<Button style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}	>
 						<Icon name='thumbs up outline'/>Like
 						</Button>
-
-						<Button>
+		
+						<Button  style={{ backgroundColor: '#816687', color: 'white'}}>
 						<Icon name='comment' />Comment
 						</Button>
 
-						<Button
+						<Button style={{ backgroundColor: '#816687', color: 'white'}}
 						onClick={() => props.postToView(post._id)}>	
 						<Icon name="envelope open outline" />
 						 Post

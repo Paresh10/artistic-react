@@ -37,9 +37,8 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 	const [friendRequest, setFriendRequest] = useState([])
 
 	// Get All Friend Request
-	const [requests, setRequests] = useState([])
+	const [requests, setRequests] = useState([]) 
 
-	const [acceptOrDeclineFriendRequest, setAcceptOrDeclineFriendRequest] = useState(false)
 	
 
 
@@ -366,16 +365,20 @@ const getAllFreindRequests = async () => {
 
 
 // Approve or Decline friend request
-const acceptOrDeclineRequest = async (requestId) => {
+const acceptOrDeclineRequest = async (requestId, status) => {
 	try {
 
 		const url = process.env.REACT_APP_API_URL + '/requests/notifications/' + requestId
 
+		console.log("url")
+		console.log(url)
 
 		const findNotificationsResponse = await fetch(url, {
 			credentials: 'include',
-			method: 'POST',
-			body: JSON.stringify(acceptOrDeclineRequest),
+			method: 'PUT',
+			body: JSON.stringify({
+				status: status
+			}),
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -407,6 +410,9 @@ const acceptOrDeclineRequest = async (requestId) => {
 
 				
 
+
+
+// LIKE Function
 
 
 
