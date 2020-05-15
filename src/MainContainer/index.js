@@ -10,7 +10,11 @@ import Notifications from '../Notifications'
 
 
 
+
 import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+
+
+
 
 
 
@@ -38,6 +42,8 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
 	// Get All Friend Request
 	const [requests, setRequests] = useState([])
+
+	const [comments, setComments] = useState([])
 
 
 
@@ -217,39 +223,39 @@ const closeUserModal = () => setIdOfUserToEdit(-1)
 
 
 // create update like for post here
-const updateLikes = async (postId, updatePost) => {
-	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+// const updateLikes = async (postId, updatePost) => {
+// 	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
 
-	try {
-		const updateLikeResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'PUT',
-			body: JSON.stringify({
-				likes: updatePost.likes,
-				body: updatePost.body
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+// 	try {
+// 		const updateLikeResponse = await fetch(url, {
+// 			credentials: 'include',
+// 			method: 'PUT',
+// 			body: JSON.stringify({
+// 				likes: updatePost.likes,
+// 				body: updatePost.body
+// 			}),
+// 			headers: {
+// 				'Content-Type': 'application/json'
+// 			}
+// 		})
 
-		const updateLikeJson = updateLikeResponse.json()
+// 		const updateLikeJson = updateLikeResponse.json()
 
 
-		if (updateLikeResponse.status === 200) {
-			const updateLikePostId = posts.findIndex(post => post._id === postId)
-			posts[updateLikePostId] = updateLikeJson.data
+// 		if (updateLikeResponse.status === 200) {
+// 			const updateLikePostId = posts.findIndex(post => post._id === postId)
+// 			posts[updateLikePostId] = updateLikeJson.data
 
-			setPosts(posts)
-			getPosts()
+// 			setLike(posts)
+// 			getPosts()
 
-	}
-}
-	catch (err) {
-		console.error(err)
-	}
+// 	}
+// }
+// 	catch (err) {
+// 		console.error(err)
+// 	}
 
-}
+// }
 
 
 
@@ -457,8 +463,36 @@ const acceptOrDeclineRequest = async (requestId, status) => {
 				
 
 
+// Comment Post Route
+const createNewComment = async (postId, newComment) => {
+	try {
 
-// LIKE Function
+		const url = process.env.REACT_APP_API_URL + '/comments/' + postId
+
+		console.log("url")
+		console.log(url)
+
+		const createNewCommentResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'POST',
+			body: JSON.stringify(newComment),
+			headers: {
+				'Content-Type': 'application/json'
+			}			
+		})
+
+		const createNewCommentJson = createNewCommentResponse.json()
+
+		if (createNewCommentResponse.status === 200) {
+
+			setComments([createNewCommentJson.data])
+		}
+
+	}
+	catch (err) {
+		console.error(err)
+	}
+} 
 
 
 
@@ -557,7 +591,6 @@ return(
 			postToView={postToView}
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			setVerbal={setVerbal}
-			updateLikes={updateLikes}
 
 			/>
 		}

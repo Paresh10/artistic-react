@@ -11,6 +11,7 @@ export default function EditPost({postToEdit, updatePost, closeModal}) {
   const handleSubmit = (event) => {
     event.preventDefault()
     updatePost(post)
+    
   }
 
 

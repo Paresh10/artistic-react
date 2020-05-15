@@ -4,10 +4,10 @@ import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
 
-export default function PostsList({posts, viewOtherUsersProfile, setVerbal, postToView, }) {
+export default function PostsList({posts, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
 
 
-
+//onClick={(event) => {createNewComment(event.target.id)}}  
 
 	const allPosts = posts.map((post) => {
 		
@@ -68,7 +68,8 @@ export default function PostsList({posts, viewOtherUsersProfile, setVerbal, post
 						<Icon name='thumbs up outline'/>Likes {post.likes}
 						</Button>
 		
-						<Button  style={{ backgroundColor: '#816687', color: 'white'}}>
+						<Button 
+						style={{ backgroundColor: '#816687', color: 'white'}}>
 						<Icon name='comment' />Comment
 						</Button>
 

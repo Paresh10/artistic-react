@@ -4,6 +4,56 @@ import LoginSignUpForm from './LoginSignUpForm'
 import MainContainer from './MainContainer'
 import { Button } from 'semantic-ui-react'
 
+import { CometChat } from "@cometchat-pro/chat"
+
+
+
+
+
+const appID = "18832bcbe6e9121";
+const region = "us";
+const appSetting = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
+CometChat.init(appID, appSetting).then(
+  () => {
+    console.log("Initialization completed successfully");
+    // You can now call login function.
+  },
+  error => {
+    console.log("Initialization failed with error:", error);
+    // Check the reason for error and take appropriate action.
+  }
+);
+
+
+
+
+const apiKey = "7ba87c621f0ab716e5d067b44d7d9a86b78a422b";
+const uid = "SUPERHERO1";
+const name = "SUPERHERO1";
+const user = new CometChat.User(uid);
+user.setName(name);
+CometChat.createUser(user, apiKey).then(
+  (user) => {
+    console.log("user created", user);
+  },
+  (error) => {
+    console.log("error", error);
+  }
+);
+CometChat.login(uid, apiKey).then(
+  (user) => {
+    console.log("Login Successful:", { user });
+  },
+  (error) => {
+    console.log("Login failed with exception:", { error });
+  }
+);
+
+
+
+
+
+
 
 
 export default function App() {
