@@ -1,13 +1,17 @@
-import React from 'react'
-import { Card, Icon, Image, Button, Label		} from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Card, Icon, Image, Button, Label} from 'semantic-ui-react'
 import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
-export default function PostsList(props) {
+
+export default function PostsList({posts, viewOtherUsersProfile, setVerbal, postToView, }) {
 
 
-	const posts = props.posts.map((post) => {
+
+
+	const allPosts = posts.map((post) => {
 		
+	
 		return(
 	
 			<Card.Group key={post._id} style={{ margin: '10px'}}>
@@ -23,8 +27,8 @@ export default function PostsList(props) {
 
 						<a style={{ color: '#816687'}}
 						onClick={() => 
-							{ props.viewOtherUsersProfile(post.user._id); 
-								props.setVerbal('True')}}
+							{ viewOtherUsersProfile(post.user._id); 
+								setVerbal('True')}}
 								>
 							{post.user.name}
 						</a>
@@ -53,10 +57,15 @@ export default function PostsList(props) {
 					</Card.Content>
 					}
 
+{
+
+}
+
 					<Card.Content extra>
 					<div className="ui three mini buttons">
-						<Button style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}	>
-						<Icon name='thumbs up outline'/>Like
+						<Button id={post._id} onClick={(event) => console.log(event.target.id, +1)}
+						style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}>
+						<Icon name='thumbs up outline'/>Likes {post.likes}
 						</Button>
 		
 						<Button  style={{ backgroundColor: '#816687', color: 'white'}}>
@@ -64,7 +73,7 @@ export default function PostsList(props) {
 						</Button>
 
 						<Button style={{ backgroundColor: '#816687', color: 'white'}}
-						onClick={() => props.postToView(post._id)}>	
+						onClick={() => postToView(post._id)}>	
 						<Icon name="envelope open outline" />
 						 Post
 						</Button>						
@@ -78,7 +87,7 @@ export default function PostsList(props) {
 
 	return(
 		<Card.Group>
-			{posts}
+			{allPosts}
 		</Card.Group>
 		
 	)

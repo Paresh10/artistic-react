@@ -37,7 +37,11 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 	const [friendRequest, setFriendRequest] = useState([])
 
 	// Get All Friend Request
-	const [requests, setRequests] = useState([]) 
+	const [requests, setRequests] = useState([])
+
+
+
+
 
 	
 
@@ -160,6 +164,8 @@ const editPost = (idOfPostToEdit) => setIdOfPostToEdit(idOfPostToEdit)
 const updatePost = async (updatePost) => {
 	const url = process.env.REACT_APP_API_URL + `/posts/` + idOfPostToEdit
 
+	console.log("url")
+	console.log(url)
 	console.log("updatePost")
 	console.log(updatePost)
 
@@ -167,7 +173,10 @@ const updatePost = async (updatePost) => {
 		const updatePostResponse = await fetch(url, {
 			credentials: 'include',
 			method: 'PUT',
-			body: JSON.stringify(updatePost),
+			body: JSON.stringify({
+				body: updatePost.body,
+				likes: updatePost.likes
+			}),
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -182,6 +191,8 @@ const updatePost = async (updatePost) => {
 			setPosts(posts)
 			setIdOfPostToEdit(-1)
 
+			console.log("updatePost.likes")
+			console.log(updatePost.likes)
 			console.log("post in update")
 			console.log(posts)
 		}
@@ -204,6 +215,41 @@ const closeModal = () => setIdOfPostToEdit(-1)
 const closeUserModal = () => setIdOfUserToEdit(-1)
 
 
+
+// create update like for post here
+const updateLikes = async (postId, updatePost) => {
+	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+
+	try {
+		const updateLikeResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify({
+				likes: updatePost.likes,
+				body: updatePost.body
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const updateLikeJson = updateLikeResponse.json()
+
+
+		if (updateLikeResponse.status === 200) {
+			const updateLikePostId = posts.findIndex(post => post._id === postId)
+			posts[updateLikePostId] = updateLikeJson.data
+
+			setPosts(posts)
+			getPosts()
+
+	}
+}
+	catch (err) {
+		console.error(err)
+	}
+
+}
 
 
 
@@ -418,8 +464,6 @@ const acceptOrDeclineRequest = async (requestId, status) => {
 
 
 
-
-
 return(
 		<React.Fragment>
 
@@ -513,6 +557,8 @@ return(
 			postToView={postToView}
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			setVerbal={setVerbal}
+			updateLikes={updateLikes}
+
 			/>
 		}
 
