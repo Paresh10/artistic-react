@@ -511,27 +511,27 @@ const createNewComment = async (postId, newComment) => {
 	}
 } 
 
-// Populated route
-// const foundCommentedPost = async (postId) => {
-// 	try {
-// 		const url  = process.env.REACT_APP_API_URL + '/comments/' + postId
+// Delete comments
+const deleteComments = async (postId, commentId) => {
+	try {
 
-// 		const commentedPostResponse = await fetch(url, {
-// 			credentials: 'include'
-// 		})
+		const url = process.env.REACT_APP_API_URL + '/comments/' + postId + '/' + commentId
 
-// 		const commentedPostJson = await commentedPostResponse.json()
+		const deleteCommentResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'DELETE'
+		})
 
-// 		console.log("commentedPostJson")
-// 		console.log(commentedPostJson)
+		if (deleteCommentResponse.status === 200) {
+			setPosts(posts.filter(post => post._id !== postId))
+		}
 
-// 		setComentedPostFound(commentedPostJson.data)
-	
-// 	}
-// 	catch (err) {
-// 		console.error(err)
-// 	}
-// }
+		postToView(postId)		
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
 
 const findCommentedPost = (postId) => {
 
@@ -560,7 +560,8 @@ return(
 			showPostById={showPostById}		
 			editPost={editPost}
 			deletePost={deletePost}
-			commentedPostFound={commentedPostFound}		
+			commentedPostFound={commentedPostFound}
+			deleteComments={deleteComments}		
 			/>
 
 		}

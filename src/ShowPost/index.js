@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {  Modal, Header, Button, Image, Card } from 'semantic-ui-react'
 
-export default function ShowPost({ userProfile, editPost, showPostById, commentedPostFound, deletePost }){
+export default function ShowPost({ userProfile, editPost, deleteComments, showPostById, commentedPostFound, deletePost }){
 
 console.log("showPostById")
 console.log(showPostById)
@@ -28,7 +28,8 @@ const commentsFoundUser = showPostById.comments.map((post) => {
 			</Card.Content>
 
 		      <Card.Content extra>
-		          <Button basic fluid color='red'>
+		          <Button onClick={() => {deleteComments(showPostById._id, post._id)}}
+		          basic fluid color='red'>
 		            Delete
 		          </Button>
 
