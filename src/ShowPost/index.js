@@ -27,6 +27,10 @@ const commentsFoundUser = showPostById.comments.map((post) => {
 		        </Card.Description>
 			</Card.Content>
 
+			{
+				userProfile._id === post.commenter._id
+
+				&&
 		      <Card.Content extra>
 		          <Button onClick={() => {deleteComments(showPostById._id, post._id)}}
 		          basic fluid color='red'>
@@ -34,6 +38,8 @@ const commentsFoundUser = showPostById.comments.map((post) => {
 		          </Button>
 
 		      </Card.Content>	
+			}
+
 
 		</Card>		
 	)
