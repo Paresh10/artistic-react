@@ -45,15 +45,17 @@ export default function LoginSignForm({login, signup, message}) {
 	}
 
 	return(
-		<Segment placeholder>
+		<Segment landing-image placeholder>
 
-			<Header as='h1' style={{color: '#816687', fontSize:'3em', marginRight: '10px', marginTop: '100px', marginBottom: '-100px', textAlign:'center'}}>
+			<Header  as='h1' 
+			style={{color: '#816687', fontSize:'3em', marginRight: '10px', marginTop: '30px', marginBottom: '-100px', textAlign:'center'}}>
 				 Artistic 
 			</Header>
 			{
 				action === 'Login'
 				?
-			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
+			<h2 
+			style={{textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300',color: '#816687'}}> 
 			Welcome back to the Artistic world! </h2>
 			:
 			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
@@ -66,8 +68,8 @@ export default function LoginSignForm({login, signup, message}) {
 
 					<h5 style={{ color: 'red' }}> {message} </h5>
 
-				    <Header as='h2' style={{ color: '#816687', marginLeft: '15px'}} textAlign='left'>
-              			<Image src="" />
+				    <Header   as='h2' style={{ color: '#816687', marginLeft: '15px'}} textAlign='left'>
+              			<Image src="https://lh4.googleusercontent.com/proxy/ieDNT3YIYLbqvtkwXpYaq1H7Fi2Yazf6R3q8yrde948MfWV9XEoyVYyg75XWeaYv-M30-Yc8N4LLKLDEIWadxmBCnBDYa97PeLctj1I=s0-d" />
 
               			 {action}!
            			</Header>

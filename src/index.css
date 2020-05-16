@@ -2,3 +2,8 @@
   color: #816687;
 }
 
+.landing-image {
+	background-color: 'red';
+    background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fdubaiastronomy.com%2Fart-artistic-background-1328891%2F&psig=AOvVaw2rf43fo5I24ZXijCKgREIj&ust=1589677429290000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPD3yI-Yt-kCFQAAAAAdAAAAABAT') !important;
+    background-size: cover !important;
+}

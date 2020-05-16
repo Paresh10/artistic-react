@@ -4,7 +4,7 @@ import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
 
-export default function PostsList({posts, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
+export default function PostsList({posts, updateLikes, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
 
 
 //onClick={(event) => {createNewComment(event.target.id)}}  
@@ -63,7 +63,7 @@ export default function PostsList({posts, createNewComment, viewOtherUsersProfil
 
 					<Card.Content extra>
 					<div className="ui three mini buttons">
-						<Button id={post._id} onClick={(event) => console.log(event.target.id, +1)}
+						<Button id={post._id} onClick={(event) => updateLikes(event.target.id)}
 						style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}>
 						<Icon name='thumbs up outline'/>Likes {post.likes}
 						</Button>

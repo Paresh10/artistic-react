@@ -11,14 +11,14 @@ import Notifications from '../Notifications'
 
 
 
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 
 
 
 
 
-export default function MainContainer({ userProfile, setUserProfile, loggededIn, loggedInUserId, message, deleteUser, buttonClick}) {
+export default function MainContainer({ userProfile, setUserProfile, loggededIn, logout, loggedInUserId, message, deleteUser, buttonClick}) {
 	const [posts, setPosts] = useState([])
 	const [showPostById, setShowPostById] = useState('')
 	const [action, setAction] = useState('')
@@ -180,8 +180,7 @@ const updatePost = async (updatePost) => {
 			credentials: 'include',
 			method: 'PUT',
 			body: JSON.stringify({
-				body: updatePost.body,
-				likes: updatePost.likes
+				body: updatePost.body
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -223,39 +222,51 @@ const closeUserModal = () => setIdOfUserToEdit(-1)
 
 
 // create update like for post here
-// const updateLikes = async (postId, updatePost) => {
-// 	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+const updateLikes = async (postId) => {
+	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
 
-// 	try {
-// 		const updateLikeResponse = await fetch(url, {
-// 			credentials: 'include',
-// 			method: 'PUT',
-// 			body: JSON.stringify({
-// 				likes: updatePost.likes,
-// 				body: updatePost.body
-// 			}),
-// 			headers: {
-// 				'Content-Type': 'application/json'
-// 			}
-// 		})
-
-// 		const updateLikeJson = updateLikeResponse.json()
+	const currentPost = posts.filter((post) => post._id === postId)
+	console.log("currentPost")
+	console.log(currentPost)
+	const likesArr = currentPost[0].likesArray
+	likesArr.push(loggedInUserId)
 
 
-// 		if (updateLikeResponse.status === 200) {
-// 			const updateLikePostId = posts.findIndex(post => post._id === postId)
-// 			posts[updateLikePostId] = updateLikeJson.data
 
-// 			setLike(posts)
-// 			getPosts()
+	console.log("likesArr")
+	console.log(likesArr)
 
-// 	}
-// }
-// 	catch (err) {
-// 		console.error(err)
-// 	}
+	console.log("loggedInUserId")
+	console.log(loggedInUserId)
 
-// }
+	try {
+		const updateLikeResponse = await fetch(url, {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify({
+				likesArray: likesArr
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		const updateLikeJson = updateLikeResponse.json()
+
+
+		if (updateLikeResponse.status === 200) {
+			const updateLikePostId = posts.findIndex(post => post._id === post._id)
+			posts[updateLikePostId] = updateLikeJson.data
+
+			getPosts()
+
+	}
+}
+	catch (err) {
+		console.error(err)
+	}
+
+}
 
 
 
@@ -502,7 +513,6 @@ return(
 		<React.Fragment>
 
 
-
 		{
 			action === "showPost"
 			&&
@@ -578,10 +588,15 @@ return(
 			/>
 		}
 			
+		    <Button style={{ backgroundColor: '#816687', color: 'white'}} 
+		    onClick={logout}>
+		    Logout
+		    </Button>
 
 			<PostNewForm 
 			addNewPost={addNewPost}/>
 			<p style={{textAlign: 'center'}}> Hey {message}! </p>
+
 
 		{
 			posts.length > 0
@@ -591,6 +606,7 @@ return(
 			postToView={postToView}
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			setVerbal={setVerbal}
+			updateLikes={updateLikes}
 
 			/>
 		}
