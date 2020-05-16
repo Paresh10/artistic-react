@@ -8,7 +8,7 @@ export default function ViewProfile({deleteUser, userProfile, updateUser, editUs
 
 return(
 		<Modal trigger={<Button 
-		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
+		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
 		ViewProfile
 		</Button>}
 		closeIcon={true}
@@ -44,7 +44,7 @@ return(
 		<Modal.Actions>
 			<Button
 			onClick={() => {editUserProfile(userProfile._id)}}
-			style={{backgroundColor: '#816687', color: 'white'}} 
+			style={{ backgroundColor: '#816687', color: 'white'}} 
 			type="Submit"> 
 				Edit 
 			</Button>

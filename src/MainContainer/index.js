@@ -96,7 +96,10 @@ const addNewPost = async (addPost) => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(addPost)
+			body: JSON.stringify({
+				body: addPost.body.substring(0, 60) + "....",
+				postPicture: addPost.postPicture 
+			})
 		})	
 
 		const newPostJson = await newPostResponse.json()
@@ -180,7 +183,7 @@ const updatePost = async (updatePost) => {
 			credentials: 'include',
 			method: 'PUT',
 			body: JSON.stringify({
-				body: updatePost.body
+				body: updatePost.body.substring(0, 60) + "....."
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -512,6 +515,11 @@ const createNewComment = async (postId, newComment) => {
 return(
 		<React.Fragment>
 
+		    <Button style={{  float: 'right',  margin: '10px', backgroundColor: '#816687', color: 'white'}} 
+		    onClick={logout}>
+		    Logout
+		    </Button>		
+
 
 		{
 			action === "showPost"
@@ -588,14 +596,11 @@ return(
 			/>
 		}
 			
-		    <Button style={{ backgroundColor: '#816687', color: 'white'}} 
-		    onClick={logout}>
-		    Logout
-		    </Button>
 
 			<PostNewForm 
 			addNewPost={addNewPost}/>
 			<p style={{textAlign: 'center'}}> Hey {message}! </p>
+
 
 
 		{
@@ -609,7 +614,10 @@ return(
 			updateLikes={updateLikes}
 
 			/>
+
+
 		}
+
 
 		</React.Fragment>
 	)

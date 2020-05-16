@@ -191,7 +191,7 @@ const setStatus = () => setButtonClick('New Action')
             ?
 
            <div>
-            <Button style={{ backgroundColor: '#816687', color: 'white'}}
+            <Button style={{ float: 'right', margin: '10px', backgroundColor: '#816687', color: 'white'}}
             onClick={() => {SetAction("OpenChat")}}>
               Chat
             </Button>
@@ -213,19 +213,19 @@ const setStatus = () => setButtonClick('New Action')
             logout={logout}
             />
 
-      }
+        }
 
-        
+              
 
-      </div>
-      :
-      <LoginSignUpForm
-      message={message} 
-      login={login}
-      signup={signup}
-      />
-  }
-    </React.Fragment>
+            </div>
+            :
+            <LoginSignUpForm
+            message={message} 
+            login={login}
+            signup={signup}
+            />
+    }
+          </React.Fragment>
   );
 }
 

@@ -40,7 +40,7 @@ return (
  <Modal 
  		closeIcon={true} 
 		trigger={<Button
-		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
+		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
 		Notifications
 		</Button>}>
     
