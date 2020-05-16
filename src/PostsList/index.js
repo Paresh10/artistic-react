@@ -4,7 +4,7 @@ import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
 
-export default function PostsList({posts, setAction, findCommentedPost, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
+export default function PostsList({posts, foundCommentedPost,findCommentedPost, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
 
 
 	const allPosts = posts.map((post) => {

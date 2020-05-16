@@ -511,26 +511,27 @@ const createNewComment = async (postId, newComment) => {
 	}
 } 
 
-const foundCommentedPost = async (postId) => {
-	try {
-		const url  = process.env.REACT_APP_API_URL + '/comments/' + postId
+// Populated route
+// const foundCommentedPost = async (postId) => {
+// 	try {
+// 		const url  = process.env.REACT_APP_API_URL + '/comments/' + postId
 
-		const commentedPostResponse = await fetch(url, {
-			credentials: 'include'
-		})
+// 		const commentedPostResponse = await fetch(url, {
+// 			credentials: 'include'
+// 		})
 
-		const commentedPostJson = await commentedPostResponse.json()
+// 		const commentedPostJson = await commentedPostResponse.json()
 
-		console.log("commentedPostJson")
-		console.log(commentedPostJson)
+// 		console.log("commentedPostJson")
+// 		console.log(commentedPostJson)
 
-		setComentedPostFound(commentedPostJson.data)
-		getAllUsers()
-	}
-	catch (err) {
-		console.error(err)
-	}
-}
+// 		setComentedPostFound(commentedPostJson.data)
+	
+// 	}
+// 	catch (err) {
+// 		console.error(err)
+// 	}
+// }
 
 const findCommentedPost = (postId) => {
 
@@ -558,7 +559,8 @@ return(
 			userProfile={userProfile}
 			showPostById={showPostById}		
 			editPost={editPost}
-			deletePost={deletePost}		
+			deletePost={deletePost}
+			commentedPostFound={commentedPostFound}		
 			/>
 
 		}

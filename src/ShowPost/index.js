@@ -1,22 +1,46 @@
 import React, { useState } from 'react'
-import {  Modal, Header, Button, Image, Comment } from 'semantic-ui-react'
+import {  Modal, Header, Button, Image, Card } from 'semantic-ui-react'
 
-export default function ShowPost({ userProfile, editPost, showPostById, deletePost }){
+export default function ShowPost({ userProfile, editPost, showPostById, commentedPostFound, deletePost }){
 
-// const commentsUser = showPostById.map((post) => {
-// 	return(
-// 		<Comment>
-// 			<Comment.Avatar src={post.comments.}/>
-// 			<Comment.Author>
+console.log("showPostById")
+console.log(showPostById)
 
-// 			</Comment.Author>
-// 		</Comment>		
-// 	)
-// })
+
+const commentsFoundUser = showPostById.comments.map((post) => {
+	return(
+		<Card key={post._id} 
+		style={{ border: '2px' }}
+		>
+			<Card.Content>
+				<Image 
+		          floated='right'
+		          size='mini'
+		          src={post.commenter.profilePicture}
+				/>
+
+		        <Card.Header>{post.commenter.name}</Card.Header>
+		        <Card.Meta> {userProfile.friends.length} friends</Card.Meta>				
+
+		        <Card.Description>
+		          	{post.text}	
+		        </Card.Description>
+			</Card.Content>
+
+		      <Card.Content extra>
+		          <Button basic fluid color='red'>
+		            Delete
+		          </Button>
+
+		      </Card.Content>	
+
+		</Card>		
+	)
+})
 
 	return(
 		<Modal trigger={<Button 
-		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
+		style={{ backgroundColor: '#816687', color: 'white'}}> 
 		See full Post
 		</Button>}
 		closeIcon={true}
@@ -26,7 +50,7 @@ export default function ShowPost({ userProfile, editPost, showPostById, deletePo
 			Posted by: – {showPostById.user.name}
 		</Modal.Header>
 
-		<Modal.Content image>
+		<Modal.Content >
 		  <Image wrapped size='medium' src={showPostById.postPicture} />
 
 		  <Modal.Description>
@@ -39,7 +63,7 @@ export default function ShowPost({ userProfile, editPost, showPostById, deletePo
 		  </Modal.Description>
 		</Modal.Content>
 			<Modal.Content>
-
+				{commentsFoundUser}
 			</Modal.Content>	
 
 	{

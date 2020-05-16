@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Modal, Form, Button } from 'semantic-ui-react'
+import { Modal, Form, Button, Header } from 'semantic-ui-react'
 
 export default function CommentOnPost({createNewComment, post}) {
 
 	const [comment, setComment] = useState('')
+	const [modal, setModal] = useState(true)
 
 const handleChange = (event) => {
 	setComment(event.target.value)
@@ -13,11 +14,22 @@ const handleSubmit = (event) => {
 	event.preventDefault()
 }
 
+const closeModal = () => {
+	setModal(false)
+}
+
 
 	
 	return(
-		<Modal open={true}>
+		<Modal open={modal} closeIcon={true} onClose={closeModal}>
 			<Modal.Content>
+				<Header>
+					Posted by - {post.user.name}
+				</Header>
+				
+				<Modal.Description>
+					{post.body}
+				</Modal.Description>
 				<Form onSubmit={handleSubmit}>
 					<Form.Input
 					type="text"
