@@ -45,7 +45,7 @@ export default function LoginSignForm({login, signup, message}) {
 	}
 
 	return(
-		<Segment landing-image placeholder>
+		<Segment className="landing-image" placeholder>
 
 			<Header  as='h1' 
 			style={{color: '#816687', fontSize:'3em', marginRight: '10px', marginTop: '30px', marginBottom: '-100px', textAlign:'center'}}>

@@ -4,10 +4,8 @@ import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
 
-export default function PostsList({posts, updateLikes, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
+export default function PostsList({posts, setAction, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
 
-
-//onClick={(event) => {createNewComment(event.target.id)}}  
 
 	const allPosts = posts.map((post) => {
 		
@@ -63,14 +61,17 @@ export default function PostsList({posts, updateLikes, createNewComment, viewOth
 
 					<Card.Content extra>
 					<div className="ui three mini buttons">
-						<Button id={post._id} onClick={(event) => updateLikes(event.target.id)}
+
+					
+						<Button id={post._id} onClick={(event) => likePost(event.target.id, [])}
 						style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}>
-						<Icon name='thumbs up outline'/>Likes {post.likes}
+						<Icon name='thumbs up outline'/>Likes {post.likesArray.length}
 						</Button>
-		
+
 						<Button 
+						onClick={() => {setAction("OpenCommentBox")}}
 						style={{ backgroundColor: '#816687', color: 'white'}}>
-						<Icon name='comment' />Comment
+						<Icon name='comment' />Comment {post.comments.length}
 						</Button>
 
 						<Button style={{ backgroundColor: '#816687', color: 'white'}}

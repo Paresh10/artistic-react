@@ -7,11 +7,9 @@ import ViewProfile from '../ViewProfile'
 import EditUser from '../EditUser'
 import ViewOtherUserProfile from '../ViewOtherUserProfile'
 import Notifications from '../Notifications'
+import CommentOnPost from '../CommentOnPost'
 
-
-
-
-import { Button } from 'semantic-ui-react'
+import { Button, Image } from 'semantic-ui-react'
 
 
 
@@ -97,7 +95,7 @@ const addNewPost = async (addPost) => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				body: addPost.body.substring(0, 60) + "....",
+				body: addPost.body,
 				postPicture: addPost.postPicture 
 			})
 		})	
@@ -183,7 +181,8 @@ const updatePost = async (updatePost) => {
 			credentials: 'include',
 			method: 'PUT',
 			body: JSON.stringify({
-				body: updatePost.body.substring(0, 60) + "....."
+				body: updatePost.body,
+				postPicture: updatePost.postPicture
 			}),
 			headers: {
 				'Content-Type': 'application/json'
@@ -224,51 +223,43 @@ const closeUserModal = () => setIdOfUserToEdit(-1)
 
 
 
-// create update like for post here
-const updateLikes = async (postId) => {
-	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+// Like Post Put route
 
-	const currentPost = posts.filter((post) => post._id === postId)
-	console.log("currentPost")
-	console.log(currentPost)
-	const likesArr = currentPost[0].likesArray
-	likesArr.push(loggedInUserId)
-
-
-
-	console.log("likesArr")
-	console.log(likesArr)
-
-	console.log("loggedInUserId")
-	console.log(loggedInUserId)
-
+const likePost = async (postId, likesArray) => {
 	try {
-		const updateLikeResponse = await fetch(url, {
+		const url = process.env.REACT_APP_API_URL + '/posts/likes/' + postId
+
+		console.log("url")
+		console.log(url)
+
+		const postForLikeResponse = await fetch(url, {
 			credentials: 'include',
 			method: 'PUT',
 			body: JSON.stringify({
-				likesArray: likesArr
+				likesArray: likesArray
 			}),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
 
-		const updateLikeJson = updateLikeResponse.json()
+		const postForLikeJson = postForLikeResponse.json()
 
 
-		if (updateLikeResponse.status === 200) {
-			const updateLikePostId = posts.findIndex(post => post._id === post._id)
-			posts[updateLikePostId] = updateLikeJson.data
+		console.log("postForLikeResponse.status")
+		console.log(postForLikeResponse.status)
+
+		if (postForLikeResponse.status === 200) {
+			const postForLikeId = posts.findIndex(post => post._id === postId)
+			posts[postForLikeId] = postForLikeJson.data
 
 			getPosts()
-
+		}
 	}
-}
+
 	catch (err) {
 		console.error(err)
 	}
-
 }
 
 
@@ -483,24 +474,32 @@ const createNewComment = async (postId, newComment) => {
 
 		const url = process.env.REACT_APP_API_URL + '/comments/' + postId
 
-		console.log("url")
+		console.log("url in comment route")
 		console.log(url)
+
+		console.log("newComment")
+		console.log(newComment)
+
 
 		const createNewCommentResponse = await fetch(url, {
 			credentials: 'include',
 			method: 'POST',
-			body: JSON.stringify(newComment),
+			body: JSON.stringify({
+				text: newComment
+			}),
 			headers: {
 				'Content-Type': 'application/json'
 			}			
 		})
 
-		const createNewCommentJson = createNewCommentResponse.json()
+		const createNewCommentJson = await createNewCommentResponse.json()
 
 		if (createNewCommentResponse.status === 200) {
 
 			setComments([createNewCommentJson.data])
 		}
+		setAction('CloseCommentBox')
+		getPosts()
 
 	}
 	catch (err) {
@@ -599,7 +598,9 @@ return(
 
 			<PostNewForm 
 			addNewPost={addNewPost}/>
-			<p style={{textAlign: 'center'}}> Hey {message}! </p>
+			<p style=
+			{{fornFamily: 'Monteserrat', size: '700', textAlign: 'center', color: '#816687'}}> Hey {message}! </p>
+
 
 
 
@@ -611,11 +612,20 @@ return(
 			postToView={postToView}
 			viewOtherUsersProfile={viewOtherUsersProfile}
 			setVerbal={setVerbal}
-			updateLikes={updateLikes}
-
+			likePost={likePost}
+			userProfile={userProfile}
+			setAction={setAction}
 			/>
 
-
+		}
+		
+		{
+			action === "OpenCommentBox"
+			&&
+			<CommentOnPost
+			createNewComment={createNewComment} 
+			posts={posts}
+			/>
 		}
 
 
