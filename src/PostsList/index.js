@@ -4,7 +4,7 @@ import ReactTimeAgo from 'react-time-ago/tooltip'
 
 
 
-export default function PostsList({posts, setAction, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
+export default function PostsList({posts, setAction, findCommentedPost, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
 
 
 	const allPosts = posts.map((post) => {
@@ -69,7 +69,7 @@ export default function PostsList({posts, setAction, likePost, userProfile, crea
 						</Button>
 
 						<Button 
-						onClick={() => {setAction("OpenCommentBox")}}
+						onClick={() => {findCommentedPost(post._id)}}
 						style={{ backgroundColor: '#816687', color: 'white'}}>
 						<Icon name='comment' />Comment {post.comments.length}
 						</Button>
@@ -77,7 +77,7 @@ export default function PostsList({posts, setAction, likePost, userProfile, crea
 						<Button style={{ backgroundColor: '#816687', color: 'white'}}
 						onClick={() => postToView(post._id)}>	
 						<Icon name="envelope open outline" />
-						 Post
+						 Open
 						</Button>						
 					</div>	
 					</Card.Content>

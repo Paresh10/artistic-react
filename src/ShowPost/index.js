@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
-import {  Modal, Header, Button, Image } from 'semantic-ui-react'
+import {  Modal, Header, Button, Image, Comment } from 'semantic-ui-react'
 
 export default function ShowPost({ userProfile, editPost, showPostById, deletePost }){
 
+// const commentsUser = showPostById.map((post) => {
+// 	return(
+// 		<Comment>
+// 			<Comment.Avatar src={post.comments.}/>
+// 			<Comment.Author>
 
+// 			</Comment.Author>
+// 		</Comment>		
+// 	)
+// })
 
 	return(
 		<Modal trigger={<Button 
@@ -29,6 +38,10 @@ export default function ShowPost({ userProfile, editPost, showPostById, deletePo
 		  	</p>
 		  </Modal.Description>
 		</Modal.Content>
+			<Modal.Content>
+
+			</Modal.Content>	
+
 	{
 			userProfile._id === showPostById.user._id
 			&&
@@ -47,6 +60,8 @@ export default function ShowPost({ userProfile, editPost, showPostById, deletePo
 				Delete 
 			</Button>						
 		</Modal.Actions>
+
+
 	}
 		</Modal>
 	)

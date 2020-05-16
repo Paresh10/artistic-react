@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Card, Form, Button } from 'semantic-ui-react'
+import { Modal, Form, Button } from 'semantic-ui-react'
 
-export default function CommentOnPost({createNewComment, posts}) {
+export default function CommentOnPost({createNewComment, post}) {
 
 	const [comment, setComment] = useState('')
 
@@ -13,22 +13,11 @@ const handleSubmit = (event) => {
 	event.preventDefault()
 }
 
-const findPost = posts.map((post) => {
-	return(
 
-		<Button key={post._id}
-		onClick={() => {createNewComment(post._id, comment)}}
-		type="submit"
-		fluid style={{ backgroundColor: '#816687', color: 'white' }}>
-		Post
-		</Button>
-	)
-
-})
 	
 	return(
-		<Card>
-			<Card.Content>
+		<Modal open={true}>
+			<Modal.Content>
 				<Form onSubmit={handleSubmit}>
 					<Form.Input
 					type="text"
@@ -38,10 +27,15 @@ const findPost = posts.map((post) => {
 					onChange={handleChange}
 					/>
 					
-					{findPost}
+					<Button 
+					onClick={() => {createNewComment(post._id, comment)}}
+					type="submit"
+					fluid style={{ backgroundColor: '#816687', color: 'white' }}>
+					Post
+					</Button>
 
 				</Form>
-			</Card.Content>
-		</Card>
+			</Modal.Content>
+		</Modal>
 	)
 }

@@ -43,6 +43,10 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
 	const [comments, setComments] = useState([])
 
+	const [commentedPostFound, setComentedPostFound] = useState('')
+
+	const [postForComment, setPostForComment] = useState('')
+
 
 
 
@@ -507,8 +511,35 @@ const createNewComment = async (postId, newComment) => {
 	}
 } 
 
+const foundCommentedPost = async (postId) => {
+	try {
+		const url  = process.env.REACT_APP_API_URL + '/comments/' + postId
 
+		const commentedPostResponse = await fetch(url, {
+			credentials: 'include'
+		})
 
+		const commentedPostJson = await commentedPostResponse.json()
+
+		console.log("commentedPostJson")
+		console.log(commentedPostJson)
+
+		setComentedPostFound(commentedPostJson.data)
+		getAllUsers()
+	}
+	catch (err) {
+		console.error(err)
+	}
+}
+
+const findCommentedPost = (postId) => {
+
+	let post = posts.find((post) => post._id === postId) 
+	
+	setPostForComment(post)
+
+	setAction('OpenCommentBox')
+}
 
 
 return(
@@ -615,6 +646,7 @@ return(
 			likePost={likePost}
 			userProfile={userProfile}
 			setAction={setAction}
+			findCommentedPost={findCommentedPost}
 			/>
 
 		}
@@ -624,7 +656,7 @@ return(
 			&&
 			<CommentOnPost
 			createNewComment={createNewComment} 
-			posts={posts}
+			post={postForComment}
 			/>
 		}
 
