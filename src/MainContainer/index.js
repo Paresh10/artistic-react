@@ -406,7 +406,7 @@ const createFriendRequest = async (createRequest) => {
 const getAllFreindRequests = async () => {
 	try {
 
-		const url = process.env.REACT_APP_API_URL + '/requests/friendsrequests'
+		const url = process.env.REACT_APP_API_URL + '/requests/friendrequests'
 
 		const allRequestsResponse = await fetch(url, {
 			credentials: 'include'
@@ -452,6 +452,10 @@ const acceptOrDeclineRequest = async (requestId, status) => {
 		
 			if (findNotificationsResponse.status === 200) {
 
+				setRequests([findNotificationsJson.data])
+			}
+
+			else {
 				setRequests([findNotificationsJson.data])
 			}
 

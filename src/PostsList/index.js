@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Card, Icon, Image, Button, Label} from 'semantic-ui-react'
-import ReactTimeAgo from 'react-time-ago/tooltip'
-
+import ReactTimeAgo from 'react-time-ago'
+ 
 
 
 export default function PostsList({posts, foundCommentedPost,findCommentedPost, likePost, userProfile, createNewComment, viewOtherUsersProfile, setVerbal, postToView, }) {
@@ -35,7 +35,7 @@ export default function PostsList({posts, foundCommentedPost,findCommentedPost, 
 
 						<Card.Meta>
 
-							{post.posted}
+						<ReactTimeAgo date={post.posted}/>
 
 						</Card.Meta>
 

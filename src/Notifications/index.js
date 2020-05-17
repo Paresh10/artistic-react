@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Modal, Feed, Button } from 'semantic-ui-react'
+import Time from '../Time'
 
 export default function Notifications({userProfile, requests, viewOtherUsersProfile, acceptOrDeclineRequest, showOthereUsersProfile}) {
 
 
 const completeFeedList = requests.map((req) => {
+	console.log("req")
+	console.log(req)
 	return(
 			<Feed.Summary key={req._id}>
 
@@ -18,13 +21,13 @@ const completeFeedList = requests.map((req) => {
 	         	 onClick={(event) => {acceptOrDeclineRequest(event.target.id, true)}}
 	         	 style={{size: 'mini', marginLeft: '20px', marginRight: '10px'}} 
 	         	 basic color='green'>
-	            	Approve
+	            	Accept
 	          	</Button>
 
 	          	<Button
 	          	id={req._id}
-	          	style={{size: 'mini', marginTop: '5px'}} 	
 	          	onClick={(event) => {acceptOrDeclineRequest(event.target.id, false)}}
+	          	style={{size: 'mini', marginTop: '5px'}} 	
 	          	basic color='red'>
 	            	Decline
 	          	</Button>

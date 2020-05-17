@@ -174,15 +174,6 @@ const setStatus = () => setButtonClick('New Action')
 
 
 
-
-    /* <Button
-        onClick={() => setButtonClick("ViewProfile")}
-        > View Profile
-    </Button> */
-
-
-    
-
   return (
     <React.Fragment>
 
@@ -193,7 +184,7 @@ const setStatus = () => setButtonClick('New Action')
            <div>
             <Button style={{ float: 'right', margin: '10px', backgroundColor: '#816687', color: 'white'}}
             onClick={() => {SetAction("OpenChat")}}>
-              Chat
+              Message Board
             </Button>
         {
             action === 'OpenChat'
