@@ -76,7 +76,7 @@ export default function PostsList({posts, foundCommentedPost,findCommentedPost, 
 
 						<Button style={{ backgroundColor: '#816687', color: 'white'}}
 						onClick={() => postToView(post._id)}>	
-						<Icon name="envelope open outline" />
+						<Icon name="envelope open outline" />	
 						 Open
 						</Button>						
 					</div>	
