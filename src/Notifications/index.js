@@ -22,7 +22,7 @@ const completeFeedList = requests.map((req) => {
 	          	</Button>
 
 	          	<Button
-	          	id={req.id}
+	          	id={req._id}
 	          	style={{size: 'mini', marginTop: '5px'}} 	
 	          	onClick={(event) => {acceptOrDeclineRequest(event.target.id, false)}}
 	          	basic color='red'>
