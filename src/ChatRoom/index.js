@@ -8,7 +8,7 @@ import io from 'socket.io-client'
 import TextField from '@material-ui/core/TextField'
 
 // Setup connection request
-const socket = io.connect(['http://localhost:3001', 'https://artistic-react.herokuapp.com'])
+const socket = io.connect('http://localhost:3000')
 
 
 
