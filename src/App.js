@@ -4,16 +4,7 @@ import MainContainer from './MainContainer'
 import ChatRoom from './ChatRoom'
 import './App.css'
 import './index.css'
-
-
-// import config from './config'
 import { Button } from 'semantic-ui-react'
-
-// import { CometChat } from "@cometchat-pro/chat"
-// import 'bootstrap/dist/css/bootstrap.css';
-
-
-
 
 
 

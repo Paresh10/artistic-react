@@ -1,10 +1,11 @@
 import React, { useState  } from 'react'
-import { Modal, Button, Image, Header, Icon } from 'semantic-ui-react'
+import { Card, Modal, Button, Image, Header, Icon } from 'semantic-ui-react'
+import ReactTimeAgo from 'react-time-ago'
 
 	
 
 export default function ViewOtherUserProfile
-({posts,createFriendRequest, setRequests, userProfile, requests, showOtherUsersProfile}) 
+({posts,createFriendRequest, setRequests, userProfile, requests, likePost, findCommentedPost, showOtherUsersProfile}) 
 {
 
 const [findUsersPost, setFindUsersPost] = useState(posts)
@@ -26,12 +27,78 @@ const closeModal = () => setState({
 })
 
 
+const usersPost = posts.map((post) => {
+	return(
+<Card.Group key={post._id} style={{ margin: '10px'}}>
+	{
+		post.user._id === showOtherUsersProfile._id
+		&&		
+				<Card>
+					<Card.Header style={{ textAlign: 'left', padding: '10px', backgroundColor: '#816687', color: 'white'}} > {post.user.name}'s Post </Card.Header>
+
+					<Card.Content>
+						<Image
+						floated='left'
+          				size='mini'
+          				src={post.user.profilePicture}
+						/>
+
+						<Card.Header>
+
+						<a style={{ color: '#816687'}}>
+							{post.user.name}
+						</a>
+
+						</Card.Header>
+
+						<Card.Meta>
+
+						<ReactTimeAgo date={post.posted}/>
+
+						</Card.Meta>
+
+						<Card.Description>
+
+						{post.body}
+							
+						</Card.Description>
+
+					</Card.Content>
+
+					{
+						 post.postPicture
+							&&
+					<Card.Content extra>
+						<Image src=	{post.postPicture} style={{width: '100%', padding: '0'}}/>
+					</Card.Content>
+					}
 
 
+					<Card.Content extra>
+					<div className="ui two mini buttons">
 
-// const condtionalRendering = userProfile.pendingRequest.map((userSendingRequestId) => {
+					
+						<Button id={post._id} onClick={(event) => likePost(event.target.id, [])}
+						style={{ backgroundColor: '#816687', color: 'white', borderColor: 'white'}}>
+						<Icon name='thumbs up outline'/>Likes {post.likesArray.length}
+						</Button>
 
-// })
+						<Button 
+						onClick={() => {findCommentedPost(post._id)}}
+						style={{ backgroundColor: '#816687', color: 'white'}}>
+						<Icon name='comment' />Comment {post.comments.length}
+						</Button>
+					
+					</div>	
+					</Card.Content>
+
+				</Card>
+	}	
+			</Card.Group>
+
+	)
+})
+
 
 
 return(
@@ -66,10 +133,6 @@ return(
 		  		{showOtherUsersProfile.about} 
 		  	</Modal.Content>
 		  		
-		  	<Modal.Description>
-	
-		  	</Modal.Description>	
-
 		  </Modal.Description>
 		</Modal.Content>
 	
@@ -90,7 +153,12 @@ return(
 			</Button>
 		}
 
+		  	<Card.Group>
+					
+				{usersPost}
 
+
+		  	</Card.Group>	
 
 		</Modal.Actions>
 

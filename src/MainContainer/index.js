@@ -448,6 +448,8 @@ const acceptOrDeclineRequest = async (requestId, status) => {
 		const findNotificationsJson = await findNotificationsResponse.json()
 			
 			console.log(findNotificationsResponse.status)
+
+			console.log("findNotificationsJson")
 			console.log(findNotificationsJson)
 		
 			if (findNotificationsResponse.status === 200) {
@@ -630,6 +632,8 @@ return(
 			setRequests={setRequests}
 			requests={requests}
 			userProfile={userProfile}
+			likePost={likePost}
+			findCommentedPost={findCommentedPost}
 			/>
 		}
 			
