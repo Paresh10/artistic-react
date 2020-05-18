@@ -4,6 +4,7 @@ import MainContainer from './MainContainer'
 import ChatRoom from './ChatRoom'
 import './App.css'
 import './index.css'
+import Footer from './Footer'
 import { Button } from 'semantic-ui-react'
 
 
@@ -168,6 +169,7 @@ const setStatus = () => setButtonClick('New Action')
   return (
     <React.Fragment>
 
+
     {
             loggedIn === true
             ?
@@ -201,12 +203,17 @@ const setStatus = () => setButtonClick('New Action')
 
             </div>
             :
+            <div>
             <LoginSignUpForm
             message={message} 
             login={login}
             signup={signup}
             />
+            <Footer style={{padding: '50px'}}/>
+            </div>
     }
+          
+
           </React.Fragment>
   );
 }

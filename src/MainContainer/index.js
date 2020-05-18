@@ -454,12 +454,9 @@ const acceptOrDeclineRequest = async (requestId, status) => {
 		
 			if (findNotificationsResponse.status === 200) {
 
-				setRequests([findNotificationsJson.data])
+				setRequests([findNotificationsJson.data])	
 			}
 
-			else {
-				setRequests([findNotificationsJson.data])
-			}
 
 
 			console.log("findNotificationsJson")
@@ -577,6 +574,8 @@ return(
 			editUserProfile={editUserProfile}
 			updateUser={updateUser}
 			deleteUser={deleteUser}
+			users={users}
+
 			/>
 			
 			

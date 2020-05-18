@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Modal, Feed, Button } from 'semantic-ui-react'
-import Time from '../Time'
 
 export default function Notifications({userProfile, requests, viewOtherUsersProfile, acceptOrDeclineRequest, showOthereUsersProfile}) {
 

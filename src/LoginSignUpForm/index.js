@@ -58,12 +58,12 @@ export default function LoginSignForm({login, signup, message}) {
 			style={{textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300',color: '#816687'}}> 
 			Welcome back to the Artistic world! </h2>
 			:
-			<h2 style={{ textAlign: 'center', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
+			<h2 style={{ textAlign: 'center', color: '#816687', paddingLeft: '15px', marginTop: '100px', marginBottom: '-100px', fontFamily: 'Monteserrat', fontWeight: '300'}}> 
 			Hey! Let's get you connected with the artistic world! </h2>	
 			}
 			
 
-			<Grid columns={2} relaxed='very' stackable inverted textAlign='center' style={{ height: '100vh', marginTop: '0px' }} verticalAlign='middle'>
+			<Grid columns={2} relaxed='very' stackable inverted textAlign='center' style={{ height: '100vh', marginTop: '-50px', marginBottom: '-53px' }} verticalAlign='middle'>
 				<Grid.Column style={{ maxWidth: 450}}>
 
 					<h5 style={{ color: 'red' }}> {message} </h5>

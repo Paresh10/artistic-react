@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button, Image, Header } from 'semantic-ui-react'
+import { Modal, Button, Image, Header, Card } from 'semantic-ui-react'
 
 
-export default function ViewProfile({deleteUser, userProfile, updateUser, editUserProfile }) {
+export default function ViewProfile({deleteUser, users, userProfile, updateUser, editUserProfile }) {
 
+
+const findUsersFriends = users.map((user) => {
+	return(
+		<p style={{fontSize: '10px'}}>
+
+			{
+				user._id === userProfile._id
+				&&
+				`${user.friends.length} Friends`
+			}
+		</p>
+	)
+})
 
 
 return(
-		<Modal trigger={<Button 
+		<Modal trigger={<Button
 		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
 		ViewProfile
 		</Button>}
@@ -16,7 +29,11 @@ return(
 
 		<Modal.Header style={{ color: '#816687' }}>
 			{userProfile.name}
+
+			{findUsersFriends}
+		
 		</Modal.Header>
+
 
 		<Modal.Content image>
 		  <Image wrapped size='medium' src={userProfile.profilePicture} />
