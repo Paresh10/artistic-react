@@ -50,6 +50,8 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
   const [postForComment, setPostForComment] = useState('')
 
+  const [status, setStatus] = useState(true)
+
 
 
 
@@ -114,7 +116,8 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
         setPosts([...posts, newPostJson.data])
       }
-
+      setStatus(false)
+      setStatus(true)
       getPosts()
     } catch (err) {
       console.error(err)
@@ -698,54 +701,40 @@ const openFriendsList = () => {
 
     {
       verbal === 'True' &&
-        <
-        ViewOtherUserProfile
-      viewOtherUsersProfile = {
-        viewOtherUsersProfile
-      }
-      posts = {
-        posts
-      }
-      showOtherUsersProfile = {
-        showOtherUsersProfile
-      }
-      createFriendRequest = {
-        createFriendRequest
-      }
-      setRequests = {
-        setRequests
-      }
-      requests = {
-        requests
-      }
-      userProfile = {
-        userProfile
-      }
-      likePost = {
-        likePost
-      }
-      findCommentedPost = {
-        findCommentedPost
-      }
+      <ViewOtherUserProfile
+      viewOtherUsersProfile = {viewOtherUsersProfile}
+      posts = {posts}
+      showOtherUsersProfile = {showOtherUsersProfile}
+      createFriendRequest = {createFriendRequest}
+      setRequests = {setRequests}
+      requests = {requests}
+      userProfile = {userProfile}
+      likePost = {likePost}
+      findCommentedPost = {findCommentedPost}
       />
     }
 
 
-    <
-    PostNewForm addNewPost = {
-      addNewPost
+    {
+      status === true
+      &&
+      <PostNewForm 
+      addNewPost = {addNewPost}
+      setStatus={setStatus}
+      /> 
     }
-    /> <
-    p style = {
-      {
-        fornFamily: 'Monteserrat',
-        size: '700',
-        textAlign: 'center',
-        color: '#816687'
-      }
-    } > Hey {
-      message
-    }! < /p>
+
+
+
+
+      <h4 
+      style = {{
+      fornFamily: 'Monteserrat',
+      size: '700',
+      textAlign: 'center',
+      color: '#816687'}}> 
+      Hey {message}! 
+    </h4>
 
 
 
@@ -753,30 +742,14 @@ const openFriendsList = () => {
     {
       posts.length > 0 &&
         <PostsList
-      posts = {
-        posts
-      }
-      postToView = {
-        postToView
-      }
-      viewOtherUsersProfile = {
-        viewOtherUsersProfile
-      }
-      setVerbal = {
-        setVerbal
-      }
-      likePost = {
-        likePost
-      }
-      userProfile = {
-        userProfile
-      }
-      setAction = {
-        setAction
-      }
-      findCommentedPost = {
-        findCommentedPost
-      }
+      posts = {posts}
+      postToView = {postToView}
+      viewOtherUsersProfile = {viewOtherUsersProfile}
+      setVerbal = {setVerbal}
+      likePost = {likePost}
+      userProfile = {userProfile}
+      setAction = {setAction}
+      findCommentedPost = {findCommentedPost}
       />
 
     }

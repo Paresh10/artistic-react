@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button, Modal, Header, Icon } from 'semantic-ui-react'
 
-export default function PostNewForm({addNewPost }) {
+export default function PostNewForm({addNewPost, setStatus }) {
 
 	const [post, setPost] = useState({
 		body: '',
@@ -37,8 +37,6 @@ const uploadPicture = async (event) => {
   }
 
 
-
-// const handleChange = event => setPost({ ...post, [event.target.name]: event.target.value })
 const handleChange = (event) => {
 	setPost({
 		body: event.target.value
@@ -52,8 +50,10 @@ const handleSubmit = (event) => {
 
 
 
+
 return(
-	<Modal trigger={<Button 
+	<Modal trigger={<Button
+		onClick={() => {setStatus(true)}} 
 		style={{ backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
 		<Icon name='write square'/> What's on your mind?
 		</Button>}
@@ -81,7 +81,7 @@ return(
 				/>
 
 				<Modal.Actions>
-					<Button 
+					<Button
 					style={{backgroundColor: '#816687', color: 'white'}} 
 					type="Submit"> 
 						Post 

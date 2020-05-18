@@ -8,7 +8,7 @@ export default function ViewProfile({deleteUser, posts, users, userProfile, upda
 
 const findUsersFriends = users.map((user) => {
 	return(
-		<p style={{fontSize: '10px'}}>
+		<p style={{fontSize: '10px'}} key={user._id}>
 
 			{
 				user._id === userProfile._id
