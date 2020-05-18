@@ -575,6 +575,9 @@ return(
 			updateUser={updateUser}
 			deleteUser={deleteUser}
 			users={users}
+			posts={posts}
+			findCommentedPost={findCommentedPost}
+			likePost={likePost}
 
 			/>
 			
