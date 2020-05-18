@@ -12,7 +12,7 @@ const socket = io.connect('http://localhost:3000' || 'https://artistic-express-a
 
 
 
-export default function ChatRoom({userProfile}) {
+export default function ChatRoom({userProfile, SetAction}) {
   // Setup socket.io messsage state
   const [chatMessage, setChatMessage] = useState({
     message: '',
@@ -87,9 +87,11 @@ const handleSubmit = (event) => {
 				</div>	
 				<Button style={{ width: '100px', marginTop: '10px' }}
 				      color='green'
-				      content='Send'
-				>
-				 Send 
+				      content='Send'> Send 
+				 </Button>
+				 <Button color='green'
+				 onClick={() => {SetAction('CloseChat')}}>
+				 	Back
 				 </Button>
 
 			</Form>

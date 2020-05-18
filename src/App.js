@@ -184,6 +184,7 @@ const setStatus = () => setButtonClick('New Action')
             ?
             <ChatRoom 
             userProfile={userProfile}
+            SetAction={SetAction}
             /> 
             :
             <MainContainer

@@ -8,674 +8,803 @@ import EditUser from '../EditUser'
 import ViewOtherUserProfile from '../ViewOtherUserProfile'
 import Notifications from '../Notifications'
 import CommentOnPost from '../CommentOnPost'
+import FriendsList from '../FriendsList'
 
-import { Button, Image } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 
 
 
 
 
-export default function MainContainer({ userProfile, setUserProfile, loggededIn, logout, loggedInUserId, message, deleteUser, buttonClick}) {
-	const [posts, setPosts] = useState([])
-	const [showPostById, setShowPostById] = useState('')
-	const [action, setAction] = useState('')
-	const [idOfPostToEdit, setIdOfPostToEdit] = useState(-1)
+export default function MainContainer({ userProfile, setUserProfile, loggededIn, logout, loggedInUserId, message, deleteUser, buttonClick }) {
 
-	// Users
-	const [idOfUserToEdit, setIdOfUserToEdit] = useState(-1)
-	const [users, setUsers] = useState([])
-	const [loggedIn, setLoggedIn] = useState(false)
+  const [posts, setPosts] = useState([])
+  const [showPostById, setShowPostById] = useState('')
+  const [action, setAction] = useState('')
+  const [idOfPostToEdit, setIdOfPostToEdit] = useState(-1)
 
-	//OtherUsersProfile
-	const [showOtherUsersProfile, setShowOtherUsersProfile] = useState('')
-	const [otherUserId, setOtherUserId] = useState(null)
+  // Users
+  const [idOfUserToEdit, setIdOfUserToEdit] = useState(-1)
+  const [users, setUsers] = useState([])
 
-	// Setting up conditional rendering of OtherUserProfile
-	const [verbal, setVerbal] = useState('NotTrue')
+  const [loggedIn, setLoggedIn] = useState(false)
 
+  //OtherUsersProfile
+  const [showOtherUsersProfile, setShowOtherUsersProfile] = useState('')
+  const [otherUserId, setOtherUserId] = useState(null)
 
-	// setting up friendRequest 
-	const [friendRequest, setFriendRequest] = useState([])
+  // Setting up conditional rendering of OtherUserProfile
+  const [verbal, setVerbal] = useState('NotTrue')
 
-	// Get All Friend Request
-	const [requests, setRequests] = useState([])
 
-	const [comments, setComments] = useState([])
+  // setting up friendRequest
+  const [friendRequest, setFriendRequest] = useState([])
 
-	const [commentedPostFound, setComentedPostFound] = useState('')
+  // Get All Friend Request
+  const [requests, setRequests] = useState([])
 
-	const [postForComment, setPostForComment] = useState('')
+  const [comments, setComments] = useState([])
 
+  const [commentedPostFound, setComentedPostFound] = useState('')
 
+  const [postForComment, setPostForComment] = useState('')
 
 
 
-	
 
 
-useEffect(() => {
-	getPosts()
-	getAllUsers()
-	getAllFreindRequests()
-}, [])
 
 
 
 
-// Get all the posts
-const getPosts = async () => {
-	try {
-		const url = process.env.REACT_APP_API_URL + "/posts"
+  useEffect(() => {
+    getPosts()
+    getAllUsers()
+    getAllFreindRequests()
+  }, [])
 
-		const postsResponse = await fetch(url, {
-			credentials: 'include'
-		})
 
-		const postsJson = await postsResponse.json()
 
-		setPosts(postsJson.data)
-		getAllUsers()
 
-		console.log("postsJson")
-		console.log(postsJson)
-	}
+  // Get all the posts
+  const getPosts = async () => {
+    try {
+      const url = process.env.REACT_APP_API_URL + "/posts"
 
-	catch (err) {
-		console.error(err)
-	}
-}
+      const postsResponse = await fetch(url, {
+        credentials: 'include'
+      })
 
+      const postsJson = await postsResponse.json()
 
-// Add New Post
-const addNewPost = async (addPost) => {
-	try {
-		const url = process.env.REACT_APP_API_URL + "/posts"
+      setPosts(postsJson.data)
+      getAllUsers()
 
-		const newPostResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				body: addPost.body,
-				postPicture: addPost.postPicture 
-			})
-		})	
+      console.log("postsJson")
+      console.log(postsJson)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-		const newPostJson = await newPostResponse.json()
-		
-		console.log(newPostResponse.status)
-		
-		if (newPostJson.status === 201) {
 
-			setPosts([...posts, newPostJson.data])
-		}
+  // Add New Post
+  const addNewPost = async (addPost) => {
+    try {
+      const url = process.env.REACT_APP_API_URL + "/posts"
 
-		getPosts()
-	}
+      const newPostResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          body: addPost.body,
+          postPicture: addPost.postPicture
+        })
+      })
 
-	catch (err) {
-		console.error(err)	
-	}
-}
+      const newPostJson = await newPostResponse.json()
 
+      console.log(newPostResponse.status)
 
-// Show route for post
-const postToView = async (postId) => {
-	try {
-		const url = process.env.REACT_APP_API_URL + '/posts/' + postId
+      if (newPostJson.status === 201) {
 
-		const showPostResponse = await fetch(url, {
-			credentials: 'include'
-		})
+        setPosts([...posts, newPostJson.data])
+      }
 
-		const showPostJson = await showPostResponse.json()
+      getPosts()
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-		setShowPostById(showPostJson.data)
-		setAction('showPost')
 
+  // Show route for post
+  const postToView = async (postId) => {
+    try {
+      const url = process.env.REACT_APP_API_URL + '/posts/' + postId
 
-	}
-	catch (err) {
-		console.error(err)
-	}
-}
+      const showPostResponse = await fetch(url, {
+        credentials: 'include'
+      })
 
+      const showPostJson = await showPostResponse.json()
 
+      setShowPostById(showPostJson.data)
+      setAction('showPost')
 
-// Delete route for Post
-const deletePost = async (postId) => {
-	const url = process.env.REACT_APP_API_URL + '/posts/' + postId
-	
 
-	try {
-		const deletePostResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'DELETE'
-		})
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-		if (deletePostResponse.status === 200) {
-			setPosts(posts.filter(post => post._id !== postId))
-		}
 
-		getPosts()
-	}
-	catch (err) {
-		console.error(err)
-	}
-}
 
+  // Delete route for Post
+  const deletePost = async (postId) => {
+    const url = process.env.REACT_APP_API_URL + '/posts/' + postId
 
-// Edit Post route
-const editPost = (idOfPostToEdit) => setIdOfPostToEdit(idOfPostToEdit)
 
-// Update Post 
-const updatePost = async (updatePost) => {
-	const url = process.env.REACT_APP_API_URL + `/posts/` + idOfPostToEdit
+    try {
+      const deletePostResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'DELETE'
+      })
 
-	console.log("url")
-	console.log(url)
-	console.log("updatePost")
-	console.log(updatePost)
+      if (deletePostResponse.status === 200) {
+        setPosts(posts.filter(post => post._id !== postId))
+      }
 
-	try {
-		const updatePostResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'PUT',
-			body: JSON.stringify({
-				body: updatePost.body,
-				postPicture: updatePost.postPicture
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+      getPosts()
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-		const updatePostJson = await updatePostResponse.json()
 
-		if (updatePostResponse.status === 200) {
-			const idOfPostToBeUpdated = posts.findIndex(post => post._id === idOfPostToEdit)
-			posts[idOfPostToBeUpdated] = updatePostJson.data
+  // Edit Post route
+  const editPost = (idOfPostToEdit) => setIdOfPostToEdit(idOfPostToEdit)
 
-			setPosts(posts)
-			setIdOfPostToEdit(-1)
+  // Update Post
+  const updatePost = async (updatePost) => {
+    const url = process.env.REACT_APP_API_URL + `/posts/` + idOfPostToEdit
 
-			console.log("updatePost.likes")
-			console.log(updatePost.likes)
-			console.log("post in update")
-			console.log(posts)
-		}
+    console.log("url")
+    console.log(url)
+    console.log("updatePost")
+    console.log(updatePost)
 
-		getPosts()
+    try {
+      const updatePostResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify({
+          body: updatePost.body,
+          postPicture: updatePost.postPicture
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
 
+      const updatePostJson = await updatePostResponse.json()
 
-	}
-	catch (err) {
-		console.error(err)
-	}
+      if (updatePostResponse.status === 200) {
+        const idOfPostToBeUpdated = posts.findIndex(post => post._id === idOfPostToEdit)
+        posts[idOfPostToBeUpdated] = updatePostJson.data
 
+        setPosts(posts)
+        setIdOfPostToEdit(-1)
 
-}
+        console.log("updatePost.likes")
+        console.log(updatePost.likes)
+        console.log("post in update")
+        console.log(posts)
+      }
 
-// Close Modal --> Post
-const closeModal = () => setIdOfPostToEdit(-1)
+      getPosts()
 
-// Close Modal --> User
-const closeUserModal = () => setIdOfUserToEdit(-1)
 
+    } catch (err) {
+      console.error(err)
+    }
 
 
-// Like Post Put route
+  }
 
-const likePost = async (postId, likesArray) => {
-	try {
-		const url = process.env.REACT_APP_API_URL + '/posts/likes/' + postId
+  // Close Modal --> Post
+  const closeModal = () => setIdOfPostToEdit(-1)
 
-		console.log("url")
-		console.log(url)
+  // Close Modal --> User
+  const closeUserModal = () => setIdOfUserToEdit(-1)
 
-		const postForLikeResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'PUT',
-			body: JSON.stringify({
-				likesArray: likesArray
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
 
-		const postForLikeJson = postForLikeResponse.json()
 
+  // Like Post Put route
 
-		console.log("postForLikeResponse.status")
-		console.log(postForLikeResponse.status)
+  const likePost = async (postId, likesArray) => {
+    try {
+      const url = process.env.REACT_APP_API_URL + '/posts/likes/' + postId
 
-		if (postForLikeResponse.status === 200) {
-			const postForLikeId = posts.findIndex(post => post._id === postId)
-			posts[postForLikeId] = postForLikeJson.data
+      console.log("url")
+      console.log(url)
 
-			getPosts()
-		}
-	}
+      const postForLikeResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify({
+          likesArray: likesArray
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
 
-	catch (err) {
-		console.error(err)
-	}
-}
+      const postForLikeJson = postForLikeResponse.json()
 
 
+      console.log("postForLikeResponse.status")
+      console.log(postForLikeResponse.status)
 
+      if (postForLikeResponse.status === 200) {
+        const postForLikeId = posts.findIndex(post => post._id === postId)
+        posts[postForLikeId] = postForLikeJson.data
 
+        getPosts()
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-// USER ROUTES STARTS HERE
 
-// GET Route --> for all the users
-const getAllUsers = async () => {
-	try {
-		const url = process.env.REACT_APP_API_URL + "/users"
 
-		const usersResponse = await fetch(url, {
-			credentials: 'include'
-		})
 
-		const usersJson = await usersResponse.json()
 
-		setUsers(usersJson.data)
+  // USER ROUTES STARTS HERE
 
-		console.log("usersJson")
-		console.log(usersJson)
-	}
+  // GET Route --> for all the users
+  const getAllUsers = async () => {
+    try {
+      const url = process.env.REACT_APP_API_URL + "/users"
 
-	catch (err) {
-		console.error(err)
-	}	
-}
+      const usersResponse = await fetch(url, {
+        credentials: 'include'
+      })
 
+      const usersJson = await usersResponse.json()
 
+      setUsers(usersJson.data)
 
+      console.log("usersJson")
+      console.log(usersJson)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-// Get Route --> Edit User
-const editUserProfile = (idOfUserToEdit) => setIdOfUserToEdit(idOfUserToEdit)
 
-// PUT Route --> Update user
-const updateUser = async (updateUser) => {
-	const url = process.env.REACT_APP_API_URL + `/users/` + idOfUserToEdit
+const getLoggedInUsersProfile = async (userId) => {
+  try {
 
-	try {
-		const updateUserResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'PUT',
-			body: JSON.stringify(updateUser),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+    const url = process.env.REACT_APP_API_URL + '/users/' + userId
 
-		const updateUserJson = await updateUserResponse.json()
+    const loggedInUserResponse = await fetch(url, {
+      credentials: 'include'
+    })
 
-		if (updateUserResponse.status === 200) {
-		
+    const loggedInUserJson = await loggedInUserResponse.json()
 
-			setUserProfile(updateUserJson.data)
-			setIdOfUserToEdit(-1)
+    console.log("loggedInUserJson")
+    console.log(loggedInUserJson)
 
-			getAllUsers()
+    setUserProfile(loggedInUserJson.data)
 
-
-			console.log("userProfile in update")
-
-
-
-		}
-
-	}
-	catch (err) {
-		console.error(err)
-	}
-
-}	
-
-
-// VIEW OTHER USER'S PROFILE
-const viewOtherUsersProfile = async (otherUserId) => {
-	try {
-		const url = process.env.REACT_APP_API_URL + '/users/checkprofile/' + otherUserId
-
-		const showOtherUsersProfileResponse = await fetch(url, {
-			credentials: 'include'
-		})
-
-		const showOtherUsersProfileJson = await showOtherUsersProfileResponse.json()
-
-		console.log("showOtherUsersProfileJson")
-		console.log(showOtherUsersProfileJson)
-
-		setShowOtherUsersProfile(showOtherUsersProfileJson.data)
-	}
-	catch (err) {
-		console.error(err)
-	}
-}
-
-
-// Add Frind
-const createFriendRequest = async (createRequest) => {
-	try {
-
-		const url = process.env.REACT_APP_API_URL + '/requests/createrequest/' + showOtherUsersProfile._id
-
-		console.log("url")
-		console.log(url)
-
-		const createFriendRequestResponse = await fetch(url, {
-
-			credentials: 'include',
-			method: 'POST',
-			body: JSON.stringify(createRequest),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-
-		const createRequestJson = await createFriendRequestResponse.json()
-			
-		console.log(createFriendRequestResponse.status)
-		
-		if (createFriendRequestResponse.status === 200) {
-
-			setRequests([createRequestJson.request])
-		}
-
-		console.log("createRequestJson")
-		console.log(createRequestJson)
-	}
-
-	catch (err) {
-		console.error(err)	
-	}
+  }
+   catch (err) {
+    console.error(err)
+   }
 }
 
 
 
-	
+  // Get Route --> Edit User
+  const editUserProfile = (idOfUserToEdit) => setIdOfUserToEdit(idOfUserToEdit)
 
-// Get all the friend request 
-const getAllFreindRequests = async () => {
-	try {
+  // PUT Route --> Update user
+  const updateUser = async (updateUser) => {
+    const url = process.env.REACT_APP_API_URL + `/users/` + idOfUserToEdit
 
-		const url = process.env.REACT_APP_API_URL + '/requests/friendrequests'
+    try {
+      const updateUserResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify(updateUser),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
 
-		const allRequestsResponse = await fetch(url, {
-			credentials: 'include'
-		})
+      const updateUserJson = await updateUserResponse.json()
 
-		const allRequestsJson = await allRequestsResponse.json()
-
-		setRequests(allRequestsJson.data)
-
-		console.log("allRequestsJson")
-		console.log(allRequestsJson)
-	}
-	catch (err) {
-		console.error(err)
-	}
-} 
+      if (updateUserResponse.status === 200) {
 
 
-// Approve or Decline friend request
-const acceptOrDeclineRequest = async (requestId, status) => {
-	try {
+        setUserProfile(updateUserJson.data)
+        setIdOfUserToEdit(-1)
 
-		const url = process.env.REACT_APP_API_URL + '/requests/notifications/' + requestId
+        getAllUsers()
 
-		console.log("url")
-		console.log(url)
 
-		const findNotificationsResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'PUT',
-			body: JSON.stringify({
-				status: status
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-
-		})
-		const findNotificationsJson = await findNotificationsResponse.json()
-			
-			console.log(findNotificationsResponse.status)
-
-			console.log("findNotificationsJson")
-			console.log(findNotificationsJson)
-		
-			if (findNotificationsResponse.status === 200) {
-
-				setRequests([findNotificationsJson.data])	
-			}
+        console.log("userProfile in update")
 
 
 
-			console.log("findNotificationsJson")
-			console.log(findNotificationsJson)
-			
-			// Call getAllRequest here
-			getAllFreindRequests()
-		}
+      }
 
-		
-	catch (err) {
-		console.error(err)
-	}
+    } catch (err) {
+      console.error(err)
+    }
+
+  }
+
+
+  // VIEW OTHER USER'S PROFILE
+  const viewOtherUsersProfile = async (otherUserId) => {
+    try {
+      const url = process.env.REACT_APP_API_URL + '/users/checkprofile/' + otherUserId
+
+      const showOtherUsersProfileResponse = await fetch(url, {
+        credentials: 'include'
+      })
+
+      const showOtherUsersProfileJson = await showOtherUsersProfileResponse.json()
+
+      console.log("showOtherUsersProfileJson")
+      console.log(showOtherUsersProfileJson)
+
+      setShowOtherUsersProfile(showOtherUsersProfileJson.data)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+  // Add Frind
+  const createFriendRequest = async (createRequest) => {
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/requests/createrequest/' + showOtherUsersProfile._id
+
+      console.log("url")
+      console.log(url)
+
+      const createFriendRequestResponse = await fetch(url, {
+
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify(createRequest),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const createRequestJson = await createFriendRequestResponse.json()
+
+      console.log(createFriendRequestResponse.status)
+
+      if (createFriendRequestResponse.status === 200) {
+
+        setRequests([createRequestJson.request])
+      }
+
+      console.log("createRequestJson")
+      console.log(createRequestJson)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+
+
+
+  // Get all the friend request
+  const getAllFreindRequests = async () => {
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/requests/friendrequests'
+
+      const allRequestsResponse = await fetch(url, {
+        credentials: 'include'
+      })
+
+      const allRequestsJson = await allRequestsResponse.json()
+
+      setRequests(allRequestsJson.data)
+
+      console.log("allRequestsJson")
+      console.log(allRequestsJson)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+  // Approve or Decline friend request
+  const acceptOrDeclineRequest = async (requestId, status) => {
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/requests/notifications/' + requestId
+
+      console.log("url")
+      console.log(url)
+
+      const findNotificationsResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify({
+          status: status
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+
+      })
+      const findNotificationsJson = await findNotificationsResponse.json()
+
+      console.log(findNotificationsResponse.status)
+
+      console.log("findNotificationsJson")
+      console.log(findNotificationsJson)
+
+      if (findNotificationsResponse.status === 200) {
+
+        setRequests([findNotificationsJson.data])
+      }
+
+
+
+      console.log("findNotificationsJson")
+      console.log(findNotificationsJson)
+
+      // Call getAllRequest here
+      getAllFreindRequests()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+
+
+  // Comment Post Route
+  const createNewComment = async (postId, newComment) => {
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/comments/' + postId
+
+      console.log("url in comment route")
+      console.log(url)
+
+      console.log("newComment")
+      console.log(newComment)
+
+
+      const createNewCommentResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({
+          text: newComment
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const createNewCommentJson = await createNewCommentResponse.json()
+
+      if (createNewCommentResponse.status === 200) {
+
+        setComments([createNewCommentJson.data])
+      }
+      setAction('CloseCommentBox')
+      getPosts()
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // Delete comments
+  const deleteComments = async (postId, commentId) => {
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/comments/' + postId + '/' + commentId
+
+      const deleteCommentResponse = await fetch(url, {
+        credentials: 'include',
+        method: 'DELETE'
+      })
+
+      if (deleteCommentResponse.status === 200) {
+        setPosts(posts.filter(post => post._id !== postId))
+      }
+
+      postToView(postId)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const findCommentedPost = (postId) => {
+
+    let post = posts.find((post) => post._id === postId)
+
+    setPostForComment(post)
+
+    setAction('OpenCommentBox')
+  }
+
+const openFriendsList = () => {
+  setAction('OpenFriendsList')
 }
 
-				
+
+  return ( <
+    React.Fragment >
+
+    <
+    Button style = {
+      {
+        float: 'right',
+        margin: '10px',
+        backgroundColor: '#816687',
+        color: 'white'
+      }
+    }
+    onClick = {
+      logout
+    } >
+    Logout <
+    /Button>
 
 
-// Comment Post Route
-const createNewComment = async (postId, newComment) => {
-	try {
+    {
+      action === "showPost" &&
+        <
+        ShowPost
+      userProfile = {
+        userProfile
+      }
+      showPostById = {
+        showPostById
+      }
+      editPost = {
+        editPost
+      }
+      deletePost = {
+        deletePost
+      }
+      commentedPostFound = {
+        commentedPostFound
+      }
+      deleteComments = {
+        deleteComments
+      }
+      />
 
-		const url = process.env.REACT_APP_API_URL + '/comments/' + postId
+    }
 
-		console.log("url in comment route")
-		console.log(url)
-
-		console.log("newComment")
-		console.log(newComment)
-
-
-		const createNewCommentResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'POST',
-			body: JSON.stringify({
-				text: newComment
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}			
-		})
-
-		const createNewCommentJson = await createNewCommentResponse.json()
-
-		if (createNewCommentResponse.status === 200) {
-
-			setComments([createNewCommentJson.data])
-		}
-		setAction('CloseCommentBox')
-		getPosts()
-
-	}
-	catch (err) {
-		console.error(err)
-	}
-} 
-
-// Delete comments
-const deleteComments = async (postId, commentId) => {
-	try {
-
-		const url = process.env.REACT_APP_API_URL + '/comments/' + postId + '/' + commentId
-
-		const deleteCommentResponse = await fetch(url, {
-			credentials: 'include',
-			method: 'DELETE'
-		})
-
-		if (deleteCommentResponse.status === 200) {
-			setPosts(posts.filter(post => post._id !== postId))
-		}
-
-		postToView(postId)		
-	}
-	catch (err) {
-		console.error(err)
-	}
-}
-
-const findCommentedPost = (postId) => {
-
-	let post = posts.find((post) => post._id === postId) 
-	
-	setPostForComment(post)
-
-	setAction('OpenCommentBox')
-}
+    <
+    ViewProfile userProfile = {
+      userProfile
+    }
+    editUserProfile = {
+      editUserProfile
+    }
+    updateUser = {
+      updateUser
+    }
+    deleteUser = {
+      deleteUser
+    }
+    users = {
+      users
+    }
+    posts = {
+      posts
+    }
+    findCommentedPost = {
+      findCommentedPost
+    }
+    likePost = {
+      likePost
+    }
+    openFriendsList={openFriendsList}
+    getLoggedInUsersProfile={getLoggedInUsersProfile}
 
 
-return(
-		<React.Fragment>
-
-		    <Button style={{  float: 'right',  margin: '10px', backgroundColor: '#816687', color: 'white'}} 
-		    onClick={logout}>
-		    Logout
-		    </Button>		
+    />
 
 
-		{
-			action === "showPost"
-			&&
-			<ShowPost
-			userProfile={userProfile}
-			showPostById={showPostById}		
-			editPost={editPost}
-			deletePost={deletePost}
-			commentedPostFound={commentedPostFound}
-			deleteComments={deleteComments}		
-			/>
 
-		}
+    {
+      idOfUserToEdit !== -1 &&
+        <
+        div >
+        <
+        EditUser
+      userProfile = {
+        userProfile
+      }
+      closeUserModal = {
+        closeUserModal
+      }
+      updateUser = {
+        updateUser
+      }
+      userToEdit = {
+        userProfile
+      }
+      /> <
+      /div>
+    }
 
-			<ViewProfile
-			userProfile={userProfile}
-			editUserProfile={editUserProfile}
-			updateUser={updateUser}
-			deleteUser={deleteUser}
-			users={users}
-			posts={posts}
-			findCommentedPost={findCommentedPost}
-			likePost={likePost}
 
-			/>
-			
-			
-			
-			{
-				idOfUserToEdit !== -1
-				&&
-			<div>
-				<EditUser
-				userProfile={userProfile}
-				closeUserModal={closeUserModal} 
-				updateUser={updateUser}
-				userToEdit = { userProfile }
-				/>
-			</div>
-			}
-		
-
-			<Notifications 
-			showOtherUsersProfile={showOtherUsersProfile}
-			userProfile={userProfile}
-			viewOtherUsersProfile={viewOtherUsersProfile}
-			acceptOrDeclineRequest={acceptOrDeclineRequest}
-			requests={requests}
-			/>	
+    <Notifications 
+    showOtherUsersProfile = { showOtherUsersProfile }
+    userProfile = {
+      userProfile
+    }
+    viewOtherUsersProfile = {
+      viewOtherUsersProfile
+    }
+    acceptOrDeclineRequest = {
+      acceptOrDeclineRequest
+    }
+    requests = {
+      requests
+    }
+    />
 
 
 
 
 
-	
-		{
-			idOfPostToEdit !== -1
-			&&
-		<div>
-			<EditPost 
-			closeModal={closeModal}
-			updatePost={updatePost}
-			postToEdit = 
-			{posts.find((post) => post._id === idOfPostToEdit)}
-			/>
-		</div>
-		}
 
-		{
-			verbal === 'True'
-			&&
-			<ViewOtherUserProfile
-			viewOtherUsersProfile={viewOtherUsersProfile}
-			posts={posts} 
-			showOtherUsersProfile={showOtherUsersProfile}
-			createFriendRequest={createFriendRequest}
-			setRequests={setRequests}
-			requests={requests}
-			userProfile={userProfile}
-			likePost={likePost}
-			findCommentedPost={findCommentedPost}
-			/>
-		}
-			
+    {
+      idOfPostToEdit !== -1 &&
+        <
+        div >
+        <
+        EditPost
+      closeModal = {
+        closeModal
+      }
+      updatePost = {
+        updatePost
+      }
+      postToEdit = {
+        posts.find((post) => post._id === idOfPostToEdit)
+      }
+      /> <
+      /div>
+    }
 
-			<PostNewForm 
-			addNewPost={addNewPost}/>
-			<p style=
-			{{fornFamily: 'Monteserrat', size: '700', textAlign: 'center', color: '#816687'}}> Hey {message}! </p>
-
-
-
-
-		{
-			posts.length > 0
-			&&
-			<PostsList 
-			posts={posts}
-			postToView={postToView}
-			viewOtherUsersProfile={viewOtherUsersProfile}
-			setVerbal={setVerbal}
-			likePost={likePost}
-			userProfile={userProfile}
-			setAction={setAction}
-			findCommentedPost={findCommentedPost}
-			/>
-
-		}
-		
-		{
-			action === "OpenCommentBox"
-			&&
-			<CommentOnPost
-			createNewComment={createNewComment} 
-			post={postForComment}
-			/>
-		}
+    {
+      verbal === 'True' &&
+        <
+        ViewOtherUserProfile
+      viewOtherUsersProfile = {
+        viewOtherUsersProfile
+      }
+      posts = {
+        posts
+      }
+      showOtherUsersProfile = {
+        showOtherUsersProfile
+      }
+      createFriendRequest = {
+        createFriendRequest
+      }
+      setRequests = {
+        setRequests
+      }
+      requests = {
+        requests
+      }
+      userProfile = {
+        userProfile
+      }
+      likePost = {
+        likePost
+      }
+      findCommentedPost = {
+        findCommentedPost
+      }
+      />
+    }
 
 
-		</React.Fragment>
-	)
+    <
+    PostNewForm addNewPost = {
+      addNewPost
+    }
+    /> <
+    p style = {
+      {
+        fornFamily: 'Monteserrat',
+        size: '700',
+        textAlign: 'center',
+        color: '#816687'
+      }
+    } > Hey {
+      message
+    }! < /p>
+
+
+
+
+    {
+      posts.length > 0 &&
+        <PostsList
+      posts = {
+        posts
+      }
+      postToView = {
+        postToView
+      }
+      viewOtherUsersProfile = {
+        viewOtherUsersProfile
+      }
+      setVerbal = {
+        setVerbal
+      }
+      likePost = {
+        likePost
+      }
+      userProfile = {
+        userProfile
+      }
+      setAction = {
+        setAction
+      }
+      findCommentedPost = {
+        findCommentedPost
+      }
+      />
+
+    }
+
+    {
+      action === "OpenCommentBox" &&
+        <
+        CommentOnPost
+      createNewComment = {
+        createNewComment
+      }
+      post = {
+        postForComment
+      }
+      />
+    }
+
+    {
+      action === 'OpenFriendsList'
+      &&
+      <FriendsList 
+      users={users}
+      userProfile={userProfile}
+      />
+    }
+
+
+    </React.Fragment>
+  )
 
 } // Main function
-

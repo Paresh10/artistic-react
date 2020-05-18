@@ -3,7 +3,7 @@ import { Modal, Button, Image, Header, Card, Icon } from 'semantic-ui-react'
 import ReactTimeAgo from 'react-time-ago'
 
 
-export default function ViewProfile({deleteUser, posts, users, userProfile, updateUser, editUserProfile, likePost, findCommentedPost }) {
+export default function ViewProfile({deleteUser, posts, users, userProfile, updateUser, editUserProfile, getLoggedInUsersProfile, likePost, openFriendsList, findCommentedPost }) {
 
 
 const findUsersFriends = users.map((user) => {
@@ -24,9 +24,12 @@ const usersPost = posts.map((post) => {
 <Card.Group key={post._id} style={{ margin: '10px'}}>
 	{
 		post.user._id === userProfile._id
-		&&		
+		&&
 				<Card>
-					<Card.Header style={{ textAlign: 'left', padding: '10px', backgroundColor: '#816687', color: 'white'}} > {post.user.name}'s Post </Card.Header>
+					<Card.Header 
+					style={{ textAlign: 'left', padding: '10px', backgroundColor: '#816687', color: 'white'}} > 
+					{post.user.name}'s Post 
+					</Card.Header>
 
 					<Card.Content>
 						<Image
@@ -52,7 +55,7 @@ const usersPost = posts.map((post) => {
 						<Card.Description>
 
 						{post.body}
-							
+
 						</Card.Description>
 
 					</Card.Content>
@@ -69,23 +72,23 @@ const usersPost = posts.map((post) => {
 					<Card.Content extra>
 					<div className="ui two mini buttons">
 
-					
+
 						<Button id={post._id} onClick={(event) => likePost(event.target.id, [])}
 						style={{ backgroundColor: '#816687', color: 'white', borderColor: 'white'}}>
 						<Icon name='thumbs up outline'/>Likes {post.likesArray.length}
 						</Button>
 
-						<Button 
+						<Button
 						onClick={() => {findCommentedPost(post._id)}}
 						style={{ backgroundColor: '#816687', color: 'white'}}>
 						<Icon name='comment' />Comment {post.comments.length}
 						</Button>
-					
-					</div>	
+
+					</div>
 					</Card.Content>
 
 				</Card>
-	}	
+	}
 			</Card.Group>
 
 	)
@@ -95,7 +98,7 @@ const usersPost = posts.map((post) => {
 
 return(
 		<Modal trigger={<Button
-		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}> 
+		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}>
 		ViewProfile
 		</Button>}
 		closeIcon={true}
@@ -104,8 +107,8 @@ return(
 		<Modal.Header style={{ color: '#816687' }}>
 			{userProfile.name}
 
-			{findUsersFriends}
-		
+			<a onClick={() => {openFriendsList(); getLoggedInUsersProfile(userProfile._id)}}>  {findUsersFriends} </a>
+
 		</Modal.Header>
 
 
@@ -114,7 +117,7 @@ return(
 
 		  <Modal.Description>
 		  	<Header>
-		  		<a > {userProfile.occupation} </a> 
+		  		{userProfile.occupation} 
 		  	</Header>
 
 		  	<Modal.Description>
@@ -122,37 +125,37 @@ return(
 		  	</Modal.Description>
 
 		  	<Modal.Content>
-		  		<Header>	
-		  			About - 
+		  		<Header>
+		  			About -
 		  		</Header>
-		  		{userProfile.about} 
+		  		{userProfile.about}
 		  	</Modal.Content>
-		  
+
 		  </Modal.Description>
 		</Modal.Content>
-		
+
 			<Card.Group>
-					
+
 				{usersPost}
 
 
-		  </Card.Group>	
-		
+		  </Card.Group>
+
 		<Modal.Actions>
 			<Button
 			onClick={() => {editUserProfile(userProfile._id)}}
-			style={{ backgroundColor: '#816687', color: 'white'}} 
-			type="Submit"> 
-				Edit 
+			style={{ backgroundColor: '#816687', color: 'white'}}
+			type="Submit">
+				Edit
 			</Button>
 
 
 			<Button
 			onClick={() => {deleteUser(userProfile._id)}}
-			style={{backgroundColor: '#816687', color: 'white'}} 
-			type="Submit"> 
-				Delete 
-			</Button>						
+			style={{backgroundColor: '#816687', color: 'white'}}
+			type="Submit">
+				Delete
+			</Button>
 		</Modal.Actions>
 
 		</Modal>
