@@ -91,7 +91,7 @@ const handleSubmit = (event) => {
 				 </Button>
 				 <Button color='green'
 				 onClick={() => {SetAction('CloseChat')}}>
-				 	Back
+				 	Home
 				 </Button>
 
 			</Form>

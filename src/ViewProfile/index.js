@@ -97,7 +97,7 @@ const usersPost = posts.map((post) => {
 
 
 return(
-		<Modal trigger={<Button
+		<Modal style={{width: '30%'}} trigger={<Button
 		style={{ float: 'right', backgroundColor: '#816687', color: 'white', margin: '10px'}}>
 		ViewProfile
 		</Button>}
@@ -105,6 +105,12 @@ return(
 		>
 
 		<Modal.Header style={{ color: '#816687' }}>
+		 
+		<Modal.Content image>
+		  <Image wrapped size='medium' src={userProfile.profilePicture} />
+
+		 </Modal.Content> 
+		
 			{userProfile.name}
 
 			<a onClick={() => {openFriendsList(); getLoggedInUsersProfile(userProfile._id)}}>  {findUsersFriends} </a>
@@ -112,21 +118,20 @@ return(
 		</Modal.Header>
 
 
-		<Modal.Content image>
-		  <Image wrapped size='medium' src={userProfile.profilePicture} />
+		<Modal.Content>
 
 		  <Modal.Description>
 		  	<Header>
 		  		{userProfile.occupation} 
+		  		<h5> {userProfile.from} </h5>
 		  	</Header>
 
 		  	<Modal.Description>
-		  		<h5> From - {userProfile.from} </h5>
 		  	</Modal.Description>
 
 		  	<Modal.Content>
 		  		<Header>
-		  			About -
+		  			About:
 		  		</Header>
 		  		{userProfile.about}
 		  	</Modal.Content>

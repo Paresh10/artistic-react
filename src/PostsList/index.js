@@ -23,7 +23,7 @@ export default function PostsList({posts, foundCommentedPost,findCommentedPost, 
 
 						<Card.Header>
 
-						<a style={{ color: '#816687'}}
+						<a style={{ textDecoration: 'underline', color: '#816687'}}
 						onClick={() => 
 							{ viewOtherUsersProfile(post.user._id); 
 								setVerbal('True')}}

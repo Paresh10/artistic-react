@@ -738,14 +738,14 @@ const closeShowPost = () => {
 
 
 
-      <h4 
+      <h2 
       style = {{
       fornFamily: 'Monteserrat',
       size: '700',
       textAlign: 'center',
       color: '#816687'}}> 
       Hey {message}! 
-    </h4>
+    </h2>
 
 
 
