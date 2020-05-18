@@ -52,6 +52,8 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
   const [status, setStatus] = useState(true)
 
+  const [open, setOpen] = useState(true)
+
 
 
 
@@ -138,6 +140,7 @@ export default function MainContainer({ userProfile, setUserProfile, loggededIn,
 
       setShowPostById(showPostJson.data)
       setAction('showPost')
+      setOpen(true)
 
 
     } catch (err) {
@@ -557,6 +560,10 @@ const openFriendsList = () => {
   setAction('OpenFriendsList')
 }
 
+const closeShowPost = () => {
+  setOpen(false)
+}
+
 
   return ( <
     React.Fragment >
@@ -599,6 +606,10 @@ const openFriendsList = () => {
       deleteComments = {
         deleteComments
       }
+      findCommentedPost={findCommentedPost}
+      likePost={likePost}
+      closeShowPost ={closeShowPost}
+      open={open}
       />
 
     }

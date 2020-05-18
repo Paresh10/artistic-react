@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import {  Modal, Header, Button, Image, Card } from 'semantic-ui-react'
+import {  Modal, Header, Button, Image, Card, Icon } from 'semantic-ui-react'
+import ReactTimeAgo from 'react-time-ago'
 
-export default function ShowPost({ userProfile, editPost, deleteComments, showPostById, commentedPostFound, deletePost }){
+
+export default function ShowPost({ userProfile, editPost, open, closeShowPost, deleteComments, likePost, showPostById, findCommentedPost, commentedPostFound, deletePost }){
+
+
 
 console.log("showPostById")
 console.log(showPostById)
@@ -21,6 +25,7 @@ const commentsFoundUser = showPostById.comments.map((post) => {
 
 		        <Card.Header>{post.commenter.name}</Card.Header>
 		        <Card.Meta> {userProfile.friends.length} friends</Card.Meta>				
+
 
 		        <Card.Description>
 		          	{post.text}	
@@ -45,30 +50,61 @@ const commentsFoundUser = showPostById.comments.map((post) => {
 	)
 })
 
-	return(
-		<Modal trigger={<Button 
+
+
+/*
+{<Button trigger=
+		</Button>}
 		style={{ backgroundColor: '#816687', color: 'white'}}> 
 		See full Post
-		</Button>}
+*/
+
+	return(
+		<Modal open={open}
+		style={{ width: '30%' }} 
 		closeIcon={true}
+		onClose={closeShowPost}
 		>
 
 		<Modal.Header style={{ color: '#816687' }}>
 			Posted by: – {showPostById.user.name}
+		 
+		    <Card.Meta style={{ fontSize: '10px', color: '#816687' }}> 
+		    	<ReactTimeAgo date={showPostById.posted} /> 
+		    </Card.Meta>
 		</Modal.Header>
+
 
 		<Modal.Content >
 		  <Image wrapped size='medium' src={showPostById.postPicture} />
 
 		  <Modal.Description>
-		  	<Header>
 		  		
-		  	</Header>
+
 		  	<p>
 		  		{showPostById.body}
 		  	</p>
 		  </Modal.Description>
-		</Modal.Content>
+
+			<Card.Content style={{ marginTop: '20px' }} extra>
+				<div className="ui two mini buttons">
+
+				
+					<Button id={showPostById._id} onClick={(event) => likePost(event.target.id, [])}
+					style={{ backgroundColor: '#816687', color: 'white', border: '1px'}}>
+					<Icon name='thumbs up outline'/>Likes {showPostById.likesArray.length}
+					</Button>
+
+					<Button 
+					onClick={() => {findCommentedPost(showPostById._id)}}
+					style={{ backgroundColor: '#816687', color: 'white'}}>
+					<Icon name='comment' />Comment {showPostById.comments.length}
+					</Button>					
+				</div>	
+			</Card.Content>
+
+		</Modal.Content> 	
+
 			<Modal.Content>
 				{commentsFoundUser}
 			</Modal.Content>	
